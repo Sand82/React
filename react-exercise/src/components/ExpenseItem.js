@@ -1,9 +1,11 @@
 import "./ExpenseItem.css";
 
+import ExspenseDate from "./ExspanseDate";
+
 const ExpenseItem = ({ exspense }) => {
   return (
     <div className="expense-item">
-      <div>{exspense.date.toISOString()}</div>
+      <ExspenseDate date={exspense.date} />
       <div className="expense-item__description">
         <h2>{exspense.title}</h2>
         <div className="expense-item__price">${exspense.amount}</div>

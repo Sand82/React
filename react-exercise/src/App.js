@@ -26,10 +26,10 @@ function App() {
   return (
     <div>
       <h2>Lets get started!!!</h2>
-      <ExpenseItem exspense={expenses[0]}></ExpenseItem>
-      <ExpenseItem exspense={expenses[1]}></ExpenseItem>
-      <ExpenseItem exspense={expenses[2]}></ExpenseItem>
-      <ExpenseItem exspense={expenses[3]}></ExpenseItem>
+      <ExpenseItem exspense={expenses[0]} />
+      <ExpenseItem exspense={expenses[1]} />
+      <ExpenseItem exspense={expenses[2]} />
+      <ExpenseItem exspense={expenses[3]} />
     </div>
   );
 }
