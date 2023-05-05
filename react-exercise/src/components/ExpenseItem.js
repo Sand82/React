@@ -1,16 +1,17 @@
 import "./ExpenseItem.css";
+import Card from "./Card";
 
 import ExpenseDate from "./ExpanseDate";
 
-const ExpenseItem = ({ exspense }) => {
+const ExpenseItem = ({ expense }) => {
   return (
-    <div className="expense-item">
-      <ExpenseDate date={exspense.date} />
+    <Card className="expense-item">
+      <ExpenseDate date={expense.date} />
       <div className="expense-item__description">
-        <h2>{exspense.title}</h2>
-        <div className="expense-item__price">${exspense.amount}</div>
+        <h2>{expense.title}</h2>
+        <div className="expense-item__price">${expense.amount}</div>
       </div>
-    </div>
+    </Card>
   );
 };
 
