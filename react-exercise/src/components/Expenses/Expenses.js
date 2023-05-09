@@ -10,6 +10,8 @@ const Expenses = ({ expenses }) => {
 
   const onFilterChange = (data) => {
     setFilterDate(data);
+
+    console.log(data);
   };
 
   return (
