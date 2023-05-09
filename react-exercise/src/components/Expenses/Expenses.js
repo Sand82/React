@@ -21,10 +21,9 @@ const Expenses = ({ expenses }) => {
           filterData={filterData}
           onFilterChange={onFilterChange}
         />
-        <ExpenseItem expense={expenses[0]} />
-        <ExpenseItem expense={expenses[1]} />
-        <ExpenseItem expense={expenses[2]} />
-        <ExpenseItem expense={expenses[3]} />
+        {expenses.map((el) => (
+          <ExpenseItem key={el.id} expense={el} />
+        ))}
       </Card>
     </div>
   );
