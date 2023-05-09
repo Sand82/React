@@ -33,6 +33,12 @@ const App = () => {
     });
   };
 
+  // const onFilterChange = (data) => {
+  //   setCurrExercise((oldData) => {
+  //     return oldData.filter((el) => el.date.getFullYear() == data);
+  //   });
+  // };
+
   return (
     <div>
       <NewExpense onAddExpense={addExpenseHandler} />
