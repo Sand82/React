@@ -48,7 +48,7 @@ const ExpenseForm = ({ onStopEditing, onSaveExpanseData }) => {
 
     const data = {
       title: title,
-      amount: amount,
+      amount: Number(amount),
       date: new Date(date),
     };
     onSaveExpanseData(data);
