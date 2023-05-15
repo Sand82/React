@@ -13,10 +13,10 @@ const App = () => {
   };
 
   return (
-    <div>
+    <>
       <AddUser onAddUsers={addUsersHandler} />
       <UsersList users={usersList} />
-    </div>
+    </>
   );
 };
 
