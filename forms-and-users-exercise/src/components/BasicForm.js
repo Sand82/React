@@ -100,9 +100,7 @@ const BasicForm = (props) => {
           onChange={emailChangeHandler}
           value={emailValue}
         />
-        {firstNameHasError && (
-          <p className="error-text">Invalid Email Address.</p>
-        )}
+        {emailHasError && <p className="error-text">Invalid Email Address.</p>}
       </div>
       <div className="form-actions">
         <button disabled={!formIsValid}>Submit</button>
