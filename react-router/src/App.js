@@ -8,14 +8,20 @@ import {
 import HomePage from "./pages/Home";
 import ProductsPage from "./pages/Products";
 import Rootlayout from "./pages/Root";
+import ErrorPage from "./pages/Error";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Rootlayout />,
+    errorElement: <ErrorPage />,
     children: [
       { path: "/", element: <HomePage /> },
-      { path: "/products", element: <ProductsPage /> },
+      {
+        path: "/products",
+        element: <ProductsPage />,
+        errorElement: <ErrorPage />,
+      },
     ],
   },
 ]);
