@@ -7,10 +7,17 @@ import {
 
 import HomePage from "./pages/Home";
 import ProductsPage from "./pages/Products";
+import Rootlayout from "./pages/Root";
 
 const router = createBrowserRouter([
-  { path: "/", element: <HomePage /> },
-  { path: "/products", element: <ProductsPage /> },
+  {
+    path: "/",
+    element: <Rootlayout />,
+    children: [
+      { path: "/", element: <HomePage /> },
+      { path: "/products", element: <ProductsPage /> },
+    ],
+  },
 ]);
 
 // const routeDefinitions = createRoutesFromElements(
