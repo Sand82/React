@@ -1,9 +1,12 @@
-import classes from './EventItem.module.css';
+import classes from "./EventItem.module.css";
 
 function EventItem({ event }) {
   function startDeleteHandler() {
     // ...
   }
+
+  console.log(event);
+  console.log(event.id);
 
   return (
     <article className={classes.event}>
