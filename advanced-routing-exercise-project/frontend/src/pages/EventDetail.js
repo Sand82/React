@@ -15,6 +15,7 @@ const EventDetailPage = () => {
 export default EventDetailPage;
 
 export async function loader({ request, params }) {
+  const method = request.method;
   const response = await fetch(
     `http://localhost:8080/events/${params.eventId}`
   );
