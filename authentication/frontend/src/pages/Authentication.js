@@ -23,7 +23,7 @@ export async function action({ reqest }) {
   };
 
   const response = await fetch("http://localhost:8080/" + mode, {
-    method: "POST",
+    method: "post",
     headers: {
       "Content-Type": "application/json",
     },
@@ -37,6 +37,11 @@ export async function action({ reqest }) {
   if (!response.ok) {
     throw json({ message: "Could not authenticate user." }, { status: 500 });
   }
+
+  const resData = await response.json();
+  const token = resData.token;
+
+  localStorage.setItem("token", token);
 
   return redirect("/");
 }
