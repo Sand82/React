@@ -12,6 +12,10 @@ const UserList = () => {
     UserService.getAll().then((data) => setUsers(data.users));
   }, []);
 
+  const clickHandler = (userId) => {
+    console.log(userId);
+  };
+
   return (
     <section className="card users-container">
       {/* Search bar component */}
@@ -25,11 +29,14 @@ const UserList = () => {
           </thead>
           <tbody>
             {/* Table row component */}
-            
-              {users.map((user) => (
-                <UserTableTbody key="_id" user={user} />
-              ))}
-              
+
+            {users.map((user) => (
+              <UserTableTbody
+                key="_id"
+                user={user}
+                clickHandler={clickHandler}
+              />
+            ))}
           </tbody>
         </table>
       </div>

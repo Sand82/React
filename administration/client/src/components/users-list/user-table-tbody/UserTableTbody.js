@@ -1,4 +1,14 @@
+import { useEffect, useState } from "react";
+
+import * as UserService from "../../../services/UserService.js";
+
 const UserTableTbody = ({ user }) => {
+  let [currUser, setCurrUser] = useState(null);
+
+  const infoClickHandle = (userId) => {
+    UserService.getOne(userId).then((data) => setCurrUser(data.user));
+  };
+
   return (
     <tr>
       <td>
@@ -44,7 +54,11 @@ const UserTableTbody = ({ user }) => {
             ></path>
           </svg>
         </button>
-        <button className="btn info-btn" title="Info">
+        <button
+          className="btn info-btn"
+          title="Info"
+          onClick={() => infoClickHandle(user._id)}
+        >
           <svg
             aria-hidden="true"
             focusable="false"
