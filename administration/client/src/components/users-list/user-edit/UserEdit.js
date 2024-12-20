@@ -1,11 +1,36 @@
+import { useState } from "react";
+
 const UserEdit = ({ user, modelCloseHeandler }) => {
+  const [values, setValues] = useState({
+    firstName: user?.firstName || "",
+    lastName: user?.lastName || "",
+    email: user?.email || "",
+    phoneNumber: user?.phoneNumber || "",
+    imageUrl: user?.imageUrl || "",
+    country: user?.address.country || "",
+    city: user?.address.city || "",
+    street: user?.address.street || "",
+    streetNumber: user?.address.streetNumber || "",
+  });
+
+  const formTitel = user ? "Edit User" : "Add User";
+
+  const userSubmitHandler = (e) => {
+    e.preventDefault();
+    console.log(e.target.value);
+  };
+
+  const validation = () => {};
+
+  const changeHandler = (e) => {};
+
   return (
     <div className="overlay">
-      <div className="backdrop" onClick={modelCloseHeandler} />
+      <div className="backdrop" onClick={userSubmitHandler} />
       <div className="modal">
         <div className="user-container">
           <header className="headers">
-            <h2>Edit User/Add User</h2>
+            <h2>{formTitel}</h2>
             <button className="btn close" onClick={modelCloseHeandler}>
               <svg
                 aria-hidden="true"
@@ -24,7 +49,7 @@ const UserEdit = ({ user, modelCloseHeandler }) => {
               </svg>
             </button>
           </header>
-          {/* <form>
+          <form onSubmit={userSubmitHandler}>
             <div className="form-row">
               <div className="form-group">
                 <label htmlFor="firstName">First name</label>
@@ -36,7 +61,9 @@ const UserEdit = ({ user, modelCloseHeandler }) => {
                     id="firstName"
                     name="firstName"
                     type="text"
-                    defaultValue={""}
+                    value={values.firstName}
+                    onChange={changeHandler}
+                    onBlur={validation}
                   />
                 </div>
                 <p className="form-error">
@@ -53,7 +80,9 @@ const UserEdit = ({ user, modelCloseHeandler }) => {
                     id="lastName"
                     name="lastName"
                     type="text"
-                    defaultValue={""}
+                    value={values.lastName}
+                    onChange={changeHandler}
+                    onBlur={validation}
                   />
                 </div>
                 <p className="form-error">
@@ -72,7 +101,9 @@ const UserEdit = ({ user, modelCloseHeandler }) => {
                     id="email"
                     name="email"
                     type="text"
-                    defaultValue={""}
+                    value={values.email}
+                    onChange={changeHandler}
+                    onBlur={validation}
                   />
                 </div>
                 <p className="form-error">Email is not valid!</p>
@@ -87,7 +118,9 @@ const UserEdit = ({ user, modelCloseHeandler }) => {
                     id="phoneNumber"
                     name="phoneNumber"
                     type="text"
-                    defaultValue={""}
+                    value={values.phoneNumber}
+                    onChange={changeHandler}
+                    onBlur={validation}
                   />
                 </div>
                 <p className="form-error">Phone number is not valid!</p>
@@ -103,7 +136,9 @@ const UserEdit = ({ user, modelCloseHeandler }) => {
                   id="imageUrl"
                   name="imageUrl"
                   type="text"
-                  defaultValue={""}
+                  value={values.imageUrl}
+                  onChange={changeHandler}
+                  onBlur={validation}
                 />
               </div>
               <p className="form-error">ImageUrl is not valid!</p>
@@ -119,7 +154,9 @@ const UserEdit = ({ user, modelCloseHeandler }) => {
                     id="country"
                     name="country"
                     type="text"
-                    defaultValue={""}
+                    value={values.country}
+                    onChange={changeHandler}
+                    onBlur={validation}
                   />
                 </div>
                 <p className="form-error">
@@ -132,7 +169,14 @@ const UserEdit = ({ user, modelCloseHeandler }) => {
                   <span>
                     <i className="fa-solid fa-city" />
                   </span>
-                  <input id="city" name="city" type="text" defaultValue={""} />
+                  <input
+                    id="city"
+                    name="city"
+                    type="text"
+                    value={values.city}
+                    onChange={changeHandler}
+                    onBlur={validation}
+                  />
                 </div>
                 <p className="form-error">
                   City should be at least 3 characters long!
@@ -150,7 +194,9 @@ const UserEdit = ({ user, modelCloseHeandler }) => {
                     id="street"
                     name="street"
                     type="text"
-                    defaultValue={""}
+                    value={values.street}
+                    onChange={changeHandler}
+                    onBlur={validation}
                   />
                 </div>
                 <p className="form-error">
@@ -167,7 +213,9 @@ const UserEdit = ({ user, modelCloseHeandler }) => {
                     id="streetNumber"
                     name="streetNumber"
                     type="text"
-                    defaultValue={""}
+                    value={values.streetNumber}
+                    onChange={changeHandler}
+                    onBlur={validation}
                   />
                 </div>
                 <p className="form-error">
@@ -188,7 +236,7 @@ const UserEdit = ({ user, modelCloseHeandler }) => {
                 Cancel
               </button>
             </div>
-          </form> */}
+          </form>
         </div>
       </div>
     </div>

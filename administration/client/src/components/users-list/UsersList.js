@@ -1,23 +1,55 @@
 import { useEffect, useState } from "react";
 
+import * as UserService from "../../services/UserService.js";
+import ActionTypes from "../../constants/ActionTypes.js";
+
 import SearchBar from "../search-bar/SearchBar.js";
 import UserTableThead from "./user-table-thead/UserTableThead.js";
 import UserTableTbody from "./user-table-tbody/UserTableTbody.js";
-import * as UserService from "../../services/UserService.js";
+import UserDetails from "./user-details/UserDetails.js";
+import UserEdit from "./user-edit/UserEdit.js";
+import UserDelete from "./user-delete/UserDelete.js";
 
 const UserList = () => {
   const [users, setUsers] = useState([]);
+  const [action, setAction] = useState({ user: null, action: null });
+
+  const actionHandler = (userId, action) => {
+    if (userId) {
+      UserService.getOne(userId).then((data) => {
+        setAction({ user: data.user, action: action });
+      });
+    } else {
+      setAction({ user: null, action: action });
+    }
+  };
+
+  const closeHeandler = () => {
+    setAction({ user: null, action: null });
+  };
 
   useEffect(() => {
     UserService.getAll().then((data) => setUsers(data.users));
   }, []);
 
-  const clickHandler = (userId) => {
-    console.log(userId);
-  };
-
   return (
     <section className="card users-container">
+      {action.user && action.action === ActionTypes.Detail && (
+        <UserDetails user={action.user} modelCloseHeandler={closeHeandler} />
+      )}
+
+      {action.user && action.action === ActionTypes.Edit && (
+        <UserEdit user={action.user} modelCloseHeandler={closeHeandler} />
+      )}
+
+      {action.user && action.action === ActionTypes.Delete && (
+        <UserDelete user={action.user} modelCloseHeandler={closeHeandler} />
+      )}
+
+      {action.action === ActionTypes.Add && (
+        <UserEdit user={null} modelCloseHeandler={closeHeandler} />
+      )}
+
       {/* Search bar component */}
       {/* <SearchBar /> */}
       {/* Table component */}
@@ -31,17 +63,20 @@ const UserList = () => {
             {/* Table row component */}
 
             {users.map((user) => (
-              <UserTableTbody
-                key={user._id}
-                user={user}
-                clickHandler={clickHandler}
-              />
+              <tr key={user._id}>
+                <UserTableTbody user={user} actionHandler={actionHandler} />
+              </tr>
             ))}
           </tbody>
         </table>
       </div>
       {/* New user button */}
-      <button className="btn-add btn">Add new user</button>
+      <button
+        className="btn-add btn"
+        onClick={() => actionHandler(null, ActionTypes.Add)}
+      >
+        Add new user
+      </button>
       {/* Pagination component */}
       <div className="pagination position">
         <div className="limits">
@@ -54,7 +89,7 @@ const UserList = () => {
           </select> */}
         </div>
         <p className="pages">1 - 1 of 1</p>
-        <div className="actions">
+        {/* <div className="actions">
           <button className="btn" title="First Page">
             <svg
               aria-hidden="true"
@@ -123,7 +158,7 @@ const UserList = () => {
               ></path>
             </svg>
           </button>
-        </div>
+        </div> */}
       </div>
     </section>
   );
