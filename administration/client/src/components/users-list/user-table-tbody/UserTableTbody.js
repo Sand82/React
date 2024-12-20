@@ -2,15 +2,21 @@ import { useEffect, useState } from "react";
 
 import * as UserService from "../../../services/UserService.js";
 
+import UserDetails from "../UserDetails/UserDetails.js";
+
 const UserTableTbody = ({ user }) => {
   let [currUser, setCurrUser] = useState(null);
 
   const infoClickHandle = (userId) => {
-    UserService.getOne(userId).then((data) => setCurrUser(data.user));
+    UserService.getOne(userId).then((data) => {
+      console.log(data);
+      setCurrUser(data.user);
+    });
   };
 
   return (
     <tr>
+      {currUser && <UserDetails user={currUser} />}
       <td>
         <img src={user.imageUrl} alt="Peter's profile" className="image" />
       </td>
