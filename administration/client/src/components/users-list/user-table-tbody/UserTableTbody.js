@@ -1,27 +1,40 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import * as UserService from "../../../services/UserService.js";
+import ActionTypes from "../../../constants/ActionTypes.js";
 
-import UserDetails from "../UserDetails/UserDetails.js";
+import UserDetails from "../user-details/UserDetails.js";
+import UserEdit from "../user-edit/UserEdit.js";
+import UserDelete from "../user-delete/UserDelete.js";
 
 const UserTableTbody = ({ user }) => {
-  let [currUser, setCurrUser] = useState(null);
+  let [action, setAction] = useState({ user: null, action: null });
 
-  const infoClickHandle = (userId) => {
+  const actionHandler = (userId, action) => {
+    console.log(action);
     UserService.getOne(userId).then((data) => {
-      setCurrUser(data.user);
+      setAction({ user: data.user, action: action });
     });
   };
 
   const closeHeandler = () => {
-    setCurrUser(null);
+    setAction({ user: null, action: null });
   };
 
   return (
     <>
-      {currUser && (
-        <UserDetails user={currUser} modelCloseHeandler={closeHeandler} />
+      {action.user && action.action === ActionTypes.Detail && (
+        <UserDetails user={action.user} modelCloseHeandler={closeHeandler} />
       )}
+
+      {action.user && action.action === ActionTypes.Edit && (
+        <UserEdit user={action.user} modelCloseHeandler={closeHeandler} />
+      )}
+
+      {action.user && action.action === ActionTypes.Delete && (
+        <UserDelete user={action.user} modelCloseHeandler={closeHeandler} />
+      )}
+
       <tr>
         <td>
           <img src={user.imageUrl} alt="Peter's profile" className="image" />
@@ -32,7 +45,11 @@ const UserTableTbody = ({ user }) => {
         <td>{user.phoneNumber}</td>
         <td>{user.createdAt}</td>
         <td className="actions">
-          <button className="btn edit-btn" title="Edit">
+          <button
+            className="btn edit-btn"
+            title="Edit"
+            onClick={() => actionHandler(user._id, ActionTypes.Edit)}
+          >
             <svg
               aria-hidden="true"
               focusable="false"
@@ -49,7 +66,11 @@ const UserTableTbody = ({ user }) => {
               ></path>
             </svg>
           </button>
-          <button className="btn delete-btn" title="Delete">
+          <button
+            className="btn delete-btn"
+            title="Delete"
+            onClick={() => actionHandler(user._id, ActionTypes.Delete)}
+          >
             <svg
               aria-hidden="true"
               focusable="false"
@@ -69,7 +90,7 @@ const UserTableTbody = ({ user }) => {
           <button
             className="btn info-btn"
             title="Info"
-            onClick={() => infoClickHandle(user._id)}
+            onClick={() => actionHandler(user._id, ActionTypes.Detail)}
           >
             <svg
               aria-hidden="true"

@@ -8,8 +8,8 @@ function App() {
     <div className="App">
       <Header />
 
-      <main class="main">
-        <section class="card users-container">
+      <main className="main">
+        <section className="card users-container">
           <UserList />
         </section>
       </main>

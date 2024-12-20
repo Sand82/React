@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 import SearchBar from "../search-bar/SearchBar.js";
-import UserTableThead from "./user-table-thead/userTableThead.js";
+import UserTableThead from "./user-table-thead/UserTableThead.js";
 import UserTableTbody from "./user-table-tbody/UserTableTbody.js";
 import * as UserService from "../../services/UserService.js";
 
@@ -19,7 +19,7 @@ const UserList = () => {
   return (
     <section className="card users-container">
       {/* Search bar component */}
-      <SearchBar />
+      {/* <SearchBar /> */}
       {/* Table component */}
       <div className="table-wrapper">
         {/* Overlap components */}
@@ -32,7 +32,7 @@ const UserList = () => {
 
             {users.map((user) => (
               <UserTableTbody
-                key="_id"
+                key={user._id}
                 user={user}
                 clickHandler={clickHandler}
               />
@@ -46,12 +46,12 @@ const UserList = () => {
       <div className="pagination position">
         <div className="limits">
           <span>Items per page:</span>
-          <select name="limit" className="limit" value={5}>
+          {/* <select name="limit" className="limit" value={5}>
             <option value={5}>5</option>
             <option value={5}>10</option>
             <option value={5}>15</option>
             <option value={5}>20</option>
-          </select>
+          </select> */}
         </div>
         <p className="pages">1 - 1 of 1</p>
         <div className="actions">
