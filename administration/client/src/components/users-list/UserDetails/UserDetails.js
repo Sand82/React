@@ -1,6 +1,6 @@
 import * as Utiles from "../../../utiles/Utiles.js";
 
-const UserDetails = ({ user }) => {
+const UserDetails = ({ user, modelCloseHeandler }) => {
   let fullName = Utiles.fullNameCreator(user.firstName, user.lastName);
 
   let address = Utiles.addressCreator(
@@ -16,12 +16,12 @@ const UserDetails = ({ user }) => {
 
   return (
     <div class="overlay">
-      <div class="backdrop"></div>
+      <div class="backdrop" onClick={modelCloseHeandler}></div>
       <div class="modal">
         <div class="detail-container">
           <header class="headers">
             <h2>User Detail</h2>
-            <button class="btn close">
+            <button class="btn close" onClick={modelCloseHeandler}>
               <svg
                 aria-hidden="true"
                 focusable="false"
