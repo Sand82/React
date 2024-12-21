@@ -7,3 +7,11 @@ export const getAll = () => {
 export const getOne = (userId) => {
   return fetch(`${url}/${userId}`).then((res) => res.json());
 };
+
+export const addUser = (user) => {
+  return fetch(`${url}`, {
+    method: "POST",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify(user),
+  }).then((res) => res.json());
+};

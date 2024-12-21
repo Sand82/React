@@ -1,7 +1,8 @@
 import { useState } from "react";
 
-const UserEdit = ({ user, modelCloseHeandler }) => {
+const UserModify = ({ user, modelCloseHeandler, manageUser }) => {
   const [values, setValues] = useState({
+    _id: user?._id || "",
     firstName: user?.firstName || "",
     lastName: user?.lastName || "",
     email: user?.email || "",
@@ -17,21 +18,30 @@ const UserEdit = ({ user, modelCloseHeandler }) => {
 
   const userSubmitHandler = (e) => {
     e.preventDefault();
-    console.log(e.target.value);
+
+    const { country, city, street, streetNumber, ...userData } = values;
+    userData.address = { country, city, street, streetNumber };
+
+    manageUser(userData);
   };
 
   const validation = () => {};
 
-  const changeHandler = (e) => {};
+  const changeHandler = (e) => {
+    setValues((state) => ({
+      ...state,
+      [e.target.name]: e.target.value,
+    }));
+  };
 
   return (
     <div className="overlay">
-      <div className="backdrop" onClick={userSubmitHandler} />
+      <div className="backdrop" onClick={() => modelCloseHeandler()} />
       <div className="modal">
         <div className="user-container">
           <header className="headers">
             <h2>{formTitel}</h2>
-            <button className="btn close" onClick={modelCloseHeandler}>
+            <button className="btn close" onClick={() => modelCloseHeandler()}>
               <svg
                 aria-hidden="true"
                 focusable="false"
@@ -63,12 +73,12 @@ const UserEdit = ({ user, modelCloseHeandler }) => {
                     type="text"
                     value={values.firstName}
                     onChange={changeHandler}
-                    onBlur={validation}
+                    //onBlur={validation}
                   />
                 </div>
-                <p className="form-error">
+                {/* <p className="form-error">
                   First name should be at least 3 characters long!
-                </p>
+                </p> */}
               </div>
               <div className="form-group">
                 <label htmlFor="lastName">Last name</label>
@@ -82,12 +92,12 @@ const UserEdit = ({ user, modelCloseHeandler }) => {
                     type="text"
                     value={values.lastName}
                     onChange={changeHandler}
-                    onBlur={validation}
+                    //onBlur={validation}
                   />
                 </div>
-                <p className="form-error">
+                {/* <p className="form-error">
                   Last name should be at least 3 characters long!
-                </p>
+                </p> */}
               </div>
             </div>
             <div className="form-row">
@@ -103,10 +113,10 @@ const UserEdit = ({ user, modelCloseHeandler }) => {
                     type="text"
                     value={values.email}
                     onChange={changeHandler}
-                    onBlur={validation}
+                    //onBlur={validation}
                   />
                 </div>
-                <p className="form-error">Email is not valid!</p>
+                {/* <p className="form-error">Email is not valid!</p> */}
               </div>
               <div className="form-group">
                 <label htmlFor="phoneNumber">Phone number</label>
@@ -120,10 +130,10 @@ const UserEdit = ({ user, modelCloseHeandler }) => {
                     type="text"
                     value={values.phoneNumber}
                     onChange={changeHandler}
-                    onBlur={validation}
+                    //onBlur={validation}
                   />
                 </div>
-                <p className="form-error">Phone number is not valid!</p>
+                {/* <p className="form-error">Phone number is not valid!</p> */}
               </div>
             </div>
             <div className="form-group long-line">
@@ -138,10 +148,10 @@ const UserEdit = ({ user, modelCloseHeandler }) => {
                   type="text"
                   value={values.imageUrl}
                   onChange={changeHandler}
-                  onBlur={validation}
+                  //onBlur={validation}
                 />
               </div>
-              <p className="form-error">ImageUrl is not valid!</p>
+              {/* <p className="form-error">ImageUrl is not valid!</p> */}
             </div>
             <div className="form-row">
               <div className="form-group">
@@ -156,12 +166,12 @@ const UserEdit = ({ user, modelCloseHeandler }) => {
                     type="text"
                     value={values.country}
                     onChange={changeHandler}
-                    onBlur={validation}
+                    //onBlur={validation}
                   />
                 </div>
-                <p className="form-error">
+                {/* <p className="form-error">
                   Country should be at least 2 characters long!
-                </p>
+                </p> */}
               </div>
               <div className="form-group">
                 <label htmlFor="city">City</label>
@@ -175,12 +185,12 @@ const UserEdit = ({ user, modelCloseHeandler }) => {
                     type="text"
                     value={values.city}
                     onChange={changeHandler}
-                    onBlur={validation}
+                    //onBlur={validation}
                   />
                 </div>
-                <p className="form-error">
+                {/* <p className="form-error">
                   City should be at least 3 characters long!
-                </p>
+                </p> */}
               </div>
             </div>
             <div className="form-row">
@@ -196,12 +206,12 @@ const UserEdit = ({ user, modelCloseHeandler }) => {
                     type="text"
                     value={values.street}
                     onChange={changeHandler}
-                    onBlur={validation}
+                    //onBlur={validation}
                   />
                 </div>
-                <p className="form-error">
+                {/* <p className="form-error">
                   Street should be at least 3 characters long!
-                </p>
+                </p> */}
               </div>
               <div className="form-group">
                 <label htmlFor="streetNumber">Street number</label>
@@ -215,12 +225,12 @@ const UserEdit = ({ user, modelCloseHeandler }) => {
                     type="text"
                     value={values.streetNumber}
                     onChange={changeHandler}
-                    onBlur={validation}
+                    //onBlur={validation}
                   />
                 </div>
-                <p className="form-error">
+                {/* <p className="form-error">
                   Street number should be a positive number!
-                </p>
+                </p> */}
               </div>
             </div>
             <div id="form-actions">
@@ -243,4 +253,4 @@ const UserEdit = ({ user, modelCloseHeandler }) => {
   );
 };
 
-export default UserEdit;
+export default UserModify;

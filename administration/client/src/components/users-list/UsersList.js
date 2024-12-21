@@ -7,12 +7,16 @@ import SearchBar from "../search-bar/SearchBar.js";
 import UserTableThead from "./user-table-thead/UserTableThead.js";
 import UserTableTbody from "./user-table-tbody/UserTableTbody.js";
 import UserDetails from "./user-details/UserDetails.js";
-import UserEdit from "./user-edit/UserEdit.js";
+import UserModify from "./user-edit/UserModify.js";
 import UserDelete from "./user-delete/UserDelete.js";
 
 const UserList = () => {
   const [users, setUsers] = useState([]);
   const [action, setAction] = useState({ user: null, action: null });
+
+  useEffect(() => {
+    UserService.getAll().then((data) => setUsers(data.users));
+  }, []);
 
   const actionHandler = (userId, action) => {
     if (userId) {
@@ -28,9 +32,17 @@ const UserList = () => {
     setAction({ user: null, action: null });
   };
 
-  useEffect(() => {
-    UserService.getAll().then((data) => setUsers(data.users));
-  }, []);
+  const addUserHandler = (user) => {
+    let { _id, ...userToAdd } = user;
+    UserService.addUser(userToAdd).then((data) => {
+      console.log(data.user);
+      setUsers([...users, data.user]);
+    });
+  };
+
+  const editUserHandler = (user) => {
+    console.log("from edit user functionality");
+  };
 
   return (
     <section className="card users-container">
@@ -38,16 +50,24 @@ const UserList = () => {
         <UserDetails user={action.user} modelCloseHeandler={closeHeandler} />
       )}
 
+      {action.action === ActionTypes.Add && (
+        <UserModify
+          user={null}
+          modelCloseHeandler={closeHeandler}
+          manageUser={addUserHandler}
+        />
+      )}
+
       {action.user && action.action === ActionTypes.Edit && (
-        <UserEdit user={action.user} modelCloseHeandler={closeHeandler} />
+        <UserModify
+          user={action.user}
+          modelCloseHeandler={closeHeandler}
+          manageUser={editUserHandler}
+        />
       )}
 
       {action.user && action.action === ActionTypes.Delete && (
         <UserDelete user={action.user} modelCloseHeandler={closeHeandler} />
-      )}
-
-      {action.action === ActionTypes.Add && (
-        <UserEdit user={null} modelCloseHeandler={closeHeandler} />
       )}
 
       {/* Search bar component */}
