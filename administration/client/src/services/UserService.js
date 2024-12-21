@@ -15,3 +15,9 @@ export const addUser = (user) => {
     body: JSON.stringify(user),
   }).then((res) => res.json());
 };
+
+export const deleteUser = (userId) => {
+  return fetch(`${url}/${userId}`, {
+    method: "DELETE",
+  }).then((res) => res.json());
+};

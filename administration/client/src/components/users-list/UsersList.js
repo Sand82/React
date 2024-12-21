@@ -7,7 +7,7 @@ import SearchBar from "../search-bar/SearchBar.js";
 import UserTableThead from "./user-table-thead/UserTableThead.js";
 import UserTableTbody from "./user-table-tbody/UserTableTbody.js";
 import UserDetails from "./user-details/UserDetails.js";
-import UserModify from "./user-edit/UserModify.js";
+import UserModify from "./user-modify/UserModify.js";
 import UserDelete from "./user-delete/UserDelete.js";
 
 const UserList = () => {
@@ -34,14 +34,18 @@ const UserList = () => {
 
   const addUserHandler = (user) => {
     let { _id, ...userToAdd } = user;
-    UserService.addUser(userToAdd).then((data) => {
-      console.log(data.user);
-      setUsers([...users, data.user]);
-    });
+    UserService.addUser(userToAdd).then((data) =>
+      setUsers([...users, data.user])
+    );
   };
 
   const editUserHandler = (user) => {
     console.log("from edit user functionality");
+  };
+
+  const removeUserHandler = (userId) => {
+    UserService.deleteUser(userId);
+    setUsers((oldUsers) => [...oldUsers.filter((user) => user._id !== userId)]);
   };
 
   return (
@@ -67,7 +71,11 @@ const UserList = () => {
       )}
 
       {action.user && action.action === ActionTypes.Delete && (
-        <UserDelete user={action.user} modelCloseHeandler={closeHeandler} />
+        <UserDelete
+          user={action.user}
+          modelCloseHeandler={closeHeandler}
+          deleteUser={removeUserHandler}
+        />
       )}
 
       {/* Search bar component */}

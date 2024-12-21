@@ -23,6 +23,7 @@ const UserModify = ({ user, modelCloseHeandler, manageUser }) => {
     userData.address = { country, city, street, streetNumber };
 
     manageUser(userData);
+    modelCloseHeandler();
   };
 
   const validation = () => {};

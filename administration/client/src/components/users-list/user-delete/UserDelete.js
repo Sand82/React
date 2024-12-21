@@ -1,4 +1,9 @@
-const UserDelete = ({ user, modelCloseHeandler }) => {
+const UserDelete = ({ user, modelCloseHeandler, deleteUser }) => {
+  const deleteUserHandler = () => {
+    deleteUser(user._id);
+    modelCloseHeandler();
+  };
+
   return (
     <div className="overlay">
       <div className="backdrop" onClick={modelCloseHeandler} />
@@ -26,7 +31,12 @@ const UserDelete = ({ user, modelCloseHeandler }) => {
           </header>
           <div className="actions">
             <div id="form-actions">
-              <button id="action-save" className="btn" type="submit">
+              <button
+                id="action-save"
+                className="btn"
+                type="submit"
+                onClick={deleteUserHandler}
+              >
                 Delete
               </button>
               <button
