@@ -1,4 +1,5 @@
 import { useState } from "react";
+import * as Validation from "../../../validation/Validation.js";
 
 const UserModify = ({ user, modelCloseHeandler, manageUser }) => {
   const [values, setValues] = useState({
@@ -14,6 +15,26 @@ const UserModify = ({ user, modelCloseHeandler, manageUser }) => {
     streetNumber: user?.address.streetNumber || "",
   });
 
+  const [errors, setErrors] = useState({
+    firstName: false,
+    lastName: false,
+    email: false,
+    phoneNumber: false,
+    imageUrl: false,
+    country: false,
+    city: false,
+    street: false,
+    streetNumber: false,
+  });
+
+  const hasError = Object.values(errors).find((x) => x);
+
+  const hasEmptyValues = Object.entries(values).find(
+    (x) => x[0] != "_id" && x[1].trim() === ""
+  );
+
+  console.log(hasEmptyValues);
+
   const formTitel = user ? "Edit User" : "Add User";
 
   const userSubmitHandler = (e) => {
@@ -26,7 +47,14 @@ const UserModify = ({ user, modelCloseHeandler, manageUser }) => {
     modelCloseHeandler();
   };
 
-  const validation = () => {};
+  const validation = (e) => {
+    let fieldValue = Validation.userValidation(e.target.name, e.target.value);
+
+    setErrors((state) => ({
+      ...state,
+      [e.target.name]: fieldValue,
+    }));
+  };
 
   const changeHandler = (e) => {
     setValues((state) => ({
@@ -37,12 +65,12 @@ const UserModify = ({ user, modelCloseHeandler, manageUser }) => {
 
   return (
     <div className="overlay">
-      <div className="backdrop" onClick={() => modelCloseHeandler()} />
+      <div className="backdrop" onClick={modelCloseHeandler} />
       <div className="modal">
         <div className="user-container">
           <header className="headers">
             <h2>{formTitel}</h2>
-            <button className="btn close" onClick={() => modelCloseHeandler()}>
+            <button className="btn close" onClick={modelCloseHeandler}>
               <svg
                 aria-hidden="true"
                 focusable="false"
@@ -74,12 +102,14 @@ const UserModify = ({ user, modelCloseHeandler, manageUser }) => {
                     type="text"
                     value={values.firstName}
                     onChange={changeHandler}
-                    //onBlur={validation}
+                    onBlur={validation}
                   />
                 </div>
-                {/* <p className="form-error">
-                  First name should be at least 3 characters long!
-                </p> */}
+                {errors.firstName && (
+                  <p className="form-error">
+                    First name should be at least 3 characters long!
+                  </p>
+                )}
               </div>
               <div className="form-group">
                 <label htmlFor="lastName">Last name</label>
@@ -93,12 +123,14 @@ const UserModify = ({ user, modelCloseHeandler, manageUser }) => {
                     type="text"
                     value={values.lastName}
                     onChange={changeHandler}
-                    //onBlur={validation}
+                    onBlur={validation}
                   />
                 </div>
-                {/* <p className="form-error">
-                  Last name should be at least 3 characters long!
-                </p> */}
+                {errors.lastName && (
+                  <p className="form-error">
+                    Last name should be at least 3 characters long!
+                  </p>
+                )}
               </div>
             </div>
             <div className="form-row">
@@ -114,10 +146,12 @@ const UserModify = ({ user, modelCloseHeandler, manageUser }) => {
                     type="text"
                     value={values.email}
                     onChange={changeHandler}
-                    //onBlur={validation}
+                    onBlur={validation}
                   />
                 </div>
-                {/* <p className="form-error">Email is not valid!</p> */}
+                {errors.email && (
+                  <p className="form-error">Email is not valid!</p>
+                )}
               </div>
               <div className="form-group">
                 <label htmlFor="phoneNumber">Phone number</label>
@@ -131,10 +165,12 @@ const UserModify = ({ user, modelCloseHeandler, manageUser }) => {
                     type="text"
                     value={values.phoneNumber}
                     onChange={changeHandler}
-                    //onBlur={validation}
+                    onBlur={validation}
                   />
                 </div>
-                {/* <p className="form-error">Phone number is not valid!</p> */}
+                {errors.phoneNumber && (
+                  <p className="form-error">Phone number is not valid!</p>
+                )}
               </div>
             </div>
             <div className="form-group long-line">
@@ -149,10 +185,12 @@ const UserModify = ({ user, modelCloseHeandler, manageUser }) => {
                   type="text"
                   value={values.imageUrl}
                   onChange={changeHandler}
-                  //onBlur={validation}
+                  onBlur={validation}
                 />
               </div>
-              {/* <p className="form-error">ImageUrl is not valid!</p> */}
+              {errors.imageUrl && (
+                <p className="form-error">ImageUrl is not valid!</p>
+              )}
             </div>
             <div className="form-row">
               <div className="form-group">
@@ -167,12 +205,14 @@ const UserModify = ({ user, modelCloseHeandler, manageUser }) => {
                     type="text"
                     value={values.country}
                     onChange={changeHandler}
-                    //onBlur={validation}
+                    onBlur={validation}
                   />
                 </div>
-                {/* <p className="form-error">
-                  Country should be at least 2 characters long!
-                </p> */}
+                {errors.country && (
+                  <p className="form-error">
+                    Country should be at least 2 characters long!
+                  </p>
+                )}
               </div>
               <div className="form-group">
                 <label htmlFor="city">City</label>
@@ -186,12 +226,14 @@ const UserModify = ({ user, modelCloseHeandler, manageUser }) => {
                     type="text"
                     value={values.city}
                     onChange={changeHandler}
-                    //onBlur={validation}
+                    onBlur={validation}
                   />
                 </div>
-                {/* <p className="form-error">
-                  City should be at least 3 characters long!
-                </p> */}
+                {errors.city && (
+                  <p className="form-error">
+                    City should be at least 3 characters long!
+                  </p>
+                )}
               </div>
             </div>
             <div className="form-row">
@@ -207,12 +249,14 @@ const UserModify = ({ user, modelCloseHeandler, manageUser }) => {
                     type="text"
                     value={values.street}
                     onChange={changeHandler}
-                    //onBlur={validation}
+                    onBlur={validation}
                   />
                 </div>
-                {/* <p className="form-error">
-                  Street should be at least 3 characters long!
-                </p> */}
+                {errors.street && (
+                  <p className="form-error">
+                    Street should be at least 3 characters long!
+                  </p>
+                )}
               </div>
               <div className="form-group">
                 <label htmlFor="streetNumber">Street number</label>
@@ -226,16 +270,23 @@ const UserModify = ({ user, modelCloseHeandler, manageUser }) => {
                     type="text"
                     value={values.streetNumber}
                     onChange={changeHandler}
-                    //onBlur={validation}
+                    onBlur={validation}
                   />
                 </div>
-                {/* <p className="form-error">
-                  Street number should be a positive number!
-                </p> */}
+                {errors.streetNumber && (
+                  <p className="form-error">
+                    Street number should be a positive number!
+                  </p>
+                )}
               </div>
             </div>
             <div id="form-actions">
-              <button id="action-save" className="btn" type="submit">
+              <button
+                id="action-save"
+                className="btn"
+                type="submit"
+                disabled={hasError || hasEmptyValues}
+              >
                 Save
               </button>
               <button
