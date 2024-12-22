@@ -40,7 +40,10 @@ const UserList = () => {
   };
 
   const editUserHandler = (user) => {
-    console.log("from edit user functionality");
+    UserService.editUser(user).then((data) => {
+      let unModifyUsers = users.filter((oldUser) => oldUser._id !== user._id);
+      setUsers([...unModifyUsers, user]);
+    });
   };
 
   const removeUserHandler = (userId) => {

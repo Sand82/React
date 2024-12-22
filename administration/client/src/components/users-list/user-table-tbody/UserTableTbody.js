@@ -1,7 +1,7 @@
 import ActionTypes from "../../../constants/ActionTypes.js";
+import * as Utiles from "../../../utiles/Utiles.js";
 
-const UserTableTbody = ({ user, actionHandler }) => { 
-
+const UserTableTbody = ({ user, actionHandler }) => {
   return (
     <>
       <td>
@@ -11,7 +11,7 @@ const UserTableTbody = ({ user, actionHandler }) => {
       <td>{user.lastName}</td>
       <td>{user.email}</td>
       <td>{user.phoneNumber}</td>
-      <td>{user.createdAt}</td>
+      <td>{Utiles.dateFormater(user.createdAt)}</td>
       <td className="actions">
         <button
           className="btn edit-btn"
