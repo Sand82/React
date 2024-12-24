@@ -14,12 +14,13 @@ import UserPagination from "./user-pagination/UserPagination.js";
 const UserList = () => {
   const [usersInfo, setUsersInfo] = useState({ users: [], count: 0 });
   const [action, setAction] = useState({ user: null, action: null });
+  const [page, setPage] = useState(1);
 
   useEffect(() => {
-    UserService.getAll().then((data) =>
+    UserService.getAll(page).then((data) =>
       setUsersInfo({ users: data.users, count: data.count })
     );
-  }, []);
+  }, [page]);
 
   const actionHandler = (userId, action) => {
     if (userId) {
@@ -35,30 +36,42 @@ const UserList = () => {
     setAction({ user: null, action: null });
   };
 
+  const currentPageInfoHeandler = (currPage) => {
+    setPage(currPage);
+  };
+
   const addUserHandler = (user) => {
     let { _id, ...userToAdd } = user;
     UserService.addUser(userToAdd).then((data) =>
-      setUsersInfo([...usersInfo, data.user])
+      setUsersInfo((currUserInfo) => ({
+        users:
+          currUserInfo.count < 5
+            ? [...usersInfo.users, data.user]
+            : [...usersInfo.users],
+        count: currUserInfo.count + 1,
+      }))
     );
   };
 
   const editUserHandler = (user) => {
     UserService.editUser(user).then((data) => {
-      let unModifyUsers = usersInfo.filter(
-        (oldUser) => oldUser._id !== user._id
+      let unModifyUsers = usersInfo.users.filter(
+        (user) => user._id !== user._id
       );
-      setUsersInfo([...unModifyUsers, user]);
+      setUsersInfo((currUserInfo) => ({
+        users: [...unModifyUsers, user],
+        count: currUserInfo.count,
+      }));
     });
   };
 
   const removeUserHandler = (userId) => {
     UserService.deleteUser(userId);
-    setUsersInfo((oldUsers) => [
-      ...oldUsers.filter((user) => user._id !== userId),
-    ]);
+    setUsersInfo((currUsersInfo) => ({
+      users: [...currUsersInfo.users.filter((user) => user._id !== userId)],
+      count: currUsersInfo.count - 1,
+    }));
   };
-
-  let userPerPage = Math.ceil();
 
   return (
     <section className="card users-container">
@@ -102,7 +115,7 @@ const UserList = () => {
           <tbody>
             {/* Table row component */}
 
-            {usersInfo.map((user) => (
+            {usersInfo.users.map((user) => (
               <tr key={user._id}>
                 <UserTableTbody user={user} actionHandler={actionHandler} />
               </tr>
@@ -118,7 +131,11 @@ const UserList = () => {
         Add new user
       </button>
       {/* Pagination component */}
-      <UserPagination usersPerPage={5} />
+      <UserPagination
+        usersPerPage={5}
+        usersCount={usersInfo.count}
+        pageHeandler={currentPageInfoHeandler}
+      />
     </section>
   );
 };

@@ -29,11 +29,10 @@ const UserModify = ({ user, modelCloseHeandler, manageUser }) => {
 
   const hasError = Object.values(errors).find((x) => x);
 
-  const hasEmptyValues = Object.entries(values).find(
-    (x) => x[0] != "_id" && x[1].trim() === ""
-  );
-
-  console.log(hasEmptyValues);
+  const hasEmptyValues = Object.entries(values).find((x) => {
+    let value = x[1].toString().trim();
+    return x[0] != "_id" && value === "";
+  });  
 
   const formTitel = user ? "Edit User" : "Add User";
 

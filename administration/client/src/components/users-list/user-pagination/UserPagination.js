@@ -1,31 +1,40 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import PaginationPage from "../../../constants/PaginationPage.js";
 
-const UserPagination = ({ usersPerPage }) => {
-  const [currPage, setCurrPage] = useState(5);
+const UserPagination = ({ usersPerPage, usersCount, pageHeandler }) => {
+  const [currPage, setCurrPage] = useState(1);
+  const [pageCount, setPageCount] = useState(1);
 
-  const currPageManager = (goDirection) => {
-    switch (goDirection) {
-      case PaginationPage.firstPage:
-        setCurrPage(1);
-        break;
-      case PaginationPage.lastPage:
-        // TODO
-        break;
-      case PaginationPage.nextPage:
-        // TODO
-        break;
-      case PaginationPage.previousPage:
-        if (currPage - 1 > 0) {
-          setCurrPage((page) => page - 1);
-        }
-        break;
-      default:
-    }
+  useEffect(() => {
+    setPageCount((pages) => Math.ceil(usersCount / usersPerPage));
+  }, [usersPerPage, usersCount]);
+
+  useEffect(() => {
+    pageHeandler(currPage);
+  },[currPage])
+
+  const currPageManager = (pageDirection) => {
+    setCurrentPage(pageDirection);    
   };
 
-  console.log(currPage);
+  const setCurrentPage = (pageDirection) => {
+    if (pageDirection === PaginationPage.firstPage) {
+      setCurrPage((value) => (value = 1));
+
+    } else if (pageDirection === PaginationPage.lastPage) {
+      setCurrPage((value) => (value = pageCount));
+     
+    } else if (pageDirection === PaginationPage.nextPage) {
+      if (currPage < pageCount) {
+        setCurrPage((page) => page + 1);
+      }
+    } else if (pageDirection === PaginationPage.previousPage) {
+      if (currPage - 1 > 0) {
+        setCurrPage((page) => page - 1);
+      }
+    }
+  };
 
   return (
     <div className="pagination position">

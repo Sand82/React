@@ -35,9 +35,7 @@ export const userValidation = (fieldName, fieldValue) => {
 };
 
 const stringChekerByRegex = (value, regexValue) => {
-  let regex = new RegExp(regexValue);
-  console.log(value);
-  console.log(regex.test(value));
+  let regex = new RegExp(regexValue);  
   if (regex.test(value)) {
     return false;
   }
@@ -59,7 +57,7 @@ const stringCheker = (title, bound) => {
 };
 
 const urlChecker = (url) => {
-  console.log(url.endsWith(".jpg"));
+  
   if (
     url.endsWith(".png") ||
     url.endsWith(".jpeg") ||
