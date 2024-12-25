@@ -10,11 +10,12 @@ import UserDetails from "./user-details/UserDetails.js";
 import UserModify from "./user-modify/UserModify.js";
 import UserDelete from "./user-delete/UserDelete.js";
 import UserPagination from "./user-pagination/UserPagination.js";
+import PageOptions from "../../constants/PageOptions.js";
 
 const UserList = () => {
   const [usersInfo, setUsersInfo] = useState({ users: [], count: 0 });
   const [action, setAction] = useState({ user: null, action: null });
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState({ page: 1, usersPerPage: PageOptions[0] });
 
   useEffect(() => {
     UserService.getAll(page).then((data) =>
@@ -36,8 +37,8 @@ const UserList = () => {
     setAction({ user: null, action: null });
   };
 
-  const currentPageInfoHeandler = (currPage) => {
-    setPage(currPage);
+  const currentPageInfoHeandler = (pageInfo) => {
+    setPage({ page: pageInfo.pageNumber, usersPerPage: pageInfo.usersPerPage });
   };
 
   const addUserHandler = (user) => {
@@ -130,7 +131,6 @@ const UserList = () => {
       >
         Add new user
       </button>
-      {/* Pagination component */}
       <UserPagination
         usersPerPage={5}
         usersCount={usersInfo.count}

@@ -1,58 +1,72 @@
 import { useEffect, useState } from "react";
 
 import PaginationPage from "../../../constants/PaginationPage.js";
+import Select from "../select/Select.js";
+import PageOptions from "../../../constants/PageOptions.js";
 
 const UserPagination = ({ usersPerPage, usersCount, pageHeandler }) => {
-  const [currPage, setCurrPage] = useState(1);
+  const [paginationInfo, setPaginationInfo] = useState({
+    pageNumber: 1,
+    usersPerPage: PageOptions[0],
+  });
   const [pageCount, setPageCount] = useState(1);
 
   useEffect(() => {
-    setPageCount((pages) => Math.ceil(usersCount / usersPerPage));
-  }, [usersPerPage, usersCount]);
+    setPageCount((pages) =>
+      Math.ceil(usersCount / paginationInfo.usersPerPage)
+    );
+  }, [paginationInfo, usersCount]);
 
   useEffect(() => {
-    pageHeandler(currPage);
-  },[currPage])
+    pageHeandler(paginationInfo);
+  }, [paginationInfo]);
 
-  const currPageManager = (pageDirection) => {
-    setCurrentPage(pageDirection);    
+  const selectOptionHeandler = (option) => {
+    setPaginationInfo((slectOption) => ({
+      pageNumber: 1,
+      usersPerPage: option,
+    }));
   };
 
   const setCurrentPage = (pageDirection) => {
     if (pageDirection === PaginationPage.firstPage) {
-      setCurrPage((value) => (value = 1));
-
+      setPaginationInfo((pageInfo) => ({
+        pageNumber: (pageInfo.pageNumber = 1),
+        usersPerPage: pageInfo.usersPerPage,
+      }));
     } else if (pageDirection === PaginationPage.lastPage) {
-      setCurrPage((value) => (value = pageCount));
-     
+      setPaginationInfo((pageInfo) => ({
+        pageNumber: pageCount,
+        usersPerPage: pageInfo.usersPerPage,
+      }));
     } else if (pageDirection === PaginationPage.nextPage) {
-      if (currPage < pageCount) {
-        setCurrPage((page) => page + 1);
+      if (paginationInfo.pageNumber < pageCount) {
+        setPaginationInfo((pageInfo) => ({
+          pageNumber: pageInfo.pageNumber + 1,
+          usersPerPage: pageInfo.usersPerPage,
+        }));
       }
     } else if (pageDirection === PaginationPage.previousPage) {
-      if (currPage - 1 > 0) {
-        setCurrPage((page) => page - 1);
+      if (paginationInfo.pageNumber - 1 > 0) {
+        setPaginationInfo((pageInfo) => ({
+          pageNumber: pageInfo.pageNumber - 1,
+          usersPerPage: pageInfo.usersPerPage,
+        }));
       }
     }
   };
 
   return (
     <div className="pagination position">
-      <div className="limits">
-        <span>Items per page:</span>
-        {/* <select name="limit" className="limit" value={5}>
-            <option value={5}>5</option>
-            <option value={5}>10</option>
-            <option value={5}>15</option>
-            <option value={5}>20</option>
-          </select> */}
-      </div>
-      <p className="pages">1 - 1 of 1</p>
+      <Select selectOptionHeandler={selectOptionHeandler} />
+      <p className="pages">
+        {paginationInfo.pageNumber} - {pageCount} of {pageCount}
+      </p>
       <div className="actions">
         <button
           className="btn"
           title="First Page"
-          onClick={() => currPageManager(PaginationPage.firstPage)}
+          onClick={() => setCurrentPage(PaginationPage.firstPage)}
         >
           <svg
             aria-hidden="true"
@@ -73,7 +87,7 @@ const UserPagination = ({ usersPerPage, usersCount, pageHeandler }) => {
         <button
           className="btn"
           title="Previous Page"
-          onClick={() => currPageManager(PaginationPage.previousPage)}
+          onClick={() => setCurrentPage(PaginationPage.previousPage)}
         >
           <svg
             aria-hidden="true"
@@ -94,7 +108,7 @@ const UserPagination = ({ usersPerPage, usersCount, pageHeandler }) => {
         <button
           className="btn"
           title="Next Page"
-          onClick={() => currPageManager(PaginationPage.nextPage)}
+          onClick={() => setCurrentPage(PaginationPage.nextPage)}
         >
           <svg
             aria-hidden="true"
@@ -115,7 +129,7 @@ const UserPagination = ({ usersPerPage, usersCount, pageHeandler }) => {
         <button
           className="btn"
           title="Last Page"
-          onClick={() => currPageManager(PaginationPage.lastPage)}
+          onClick={() => setCurrentPage(PaginationPage.lastPage)}
         >
           <svg
             aria-hidden="true"
