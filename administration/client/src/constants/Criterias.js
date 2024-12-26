@@ -1,4 +1,5 @@
 const Criterias = {
+  notSelected: "notSelected",
   firstName: "firstName",
   lastName: "lastName",
   email: "email",

@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import * as UserService from "../../services/UserService.js";
 import ActionTypes from "../../constants/ActionTypes.js";
 
-import SearchBar from "../search-bar/SearchBar.js";
+import SearchBar from "./search-bar/SearchBar.js";
 import UserTableThead from "./user-table-thead/UserTableThead.js";
 import UserTableTbody from "./user-table-tbody/UserTableTbody.js";
 import UserDetails from "./user-details/UserDetails.js";
@@ -23,7 +23,6 @@ const UserList = () => {
   });
 
   useEffect(() => {
-    console.log(sortParams);
     UserService.getAll(page, sortParams).then((data) =>
       setUsersInfo({ users: data.users, count: data.count })
     );
@@ -119,6 +118,7 @@ const UserList = () => {
 
       {/* Search bar component */}
       {/* <SearchBar /> */}
+      <SearchBar />
       {/* Table component */}
       <div className="table-wrapper">
         {/* Overlap components */}
