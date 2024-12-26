@@ -1,10 +1,10 @@
 let url = "http://localhost:3005/api/users";
 
-export const getAll = (page) => {
-  console.log(page);
-  return fetch(`${url}?page=${page.page}&limit=${page.usersPerPage}`).then(
-    (res) => res.json()
-  );
+///users?page=1&limit=5&search=Chris&criteria=firstName&sort=createdAt&order=desc
+export const getAll = (page, sortParams) => {
+  return fetch(
+    `${url}?page=${page.page}&limit=${page.usersPerPage}&sort=${sortParams.sortColumn}&order=${sortParams.direction}`
+  ).then((res) => res.json());
 };
 
 export const getOne = (userId) => {

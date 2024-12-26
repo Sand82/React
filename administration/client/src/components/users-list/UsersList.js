@@ -11,17 +11,23 @@ import UserModify from "./user-modify/UserModify.js";
 import UserDelete from "./user-delete/UserDelete.js";
 import UserPagination from "./user-pagination/UserPagination.js";
 import PageOptions from "../../constants/PageOptions.js";
+import Criterias from "../../constants/Criterias.js";
 
 const UserList = () => {
   const [usersInfo, setUsersInfo] = useState({ users: [], count: 0 });
   const [action, setAction] = useState({ user: null, action: null });
   const [page, setPage] = useState({ page: 1, usersPerPage: PageOptions[0] });
+  const [sortParams, setSortParams] = useState({
+    sortColumn: Criterias.firstName,
+    direction: "asc",
+  });
 
   useEffect(() => {
-    UserService.getAll(page).then((data) =>
+    console.log(sortParams);
+    UserService.getAll(page, sortParams).then((data) =>
       setUsersInfo({ users: data.users, count: data.count })
     );
-  }, [page]);
+  }, [page, sortParams]);
 
   const actionHandler = (userId, action) => {
     if (userId) {
@@ -41,12 +47,19 @@ const UserList = () => {
     setPage({ page: pageInfo.pageNumber, usersPerPage: pageInfo.usersPerPage });
   };
 
+  const sortHeandler = (params) => {
+    setSortParams({
+      sortColumn: params.criteria,
+      direction: params.order ? "asc" : "desc",
+    });
+  };
+
   const addUserHandler = (user) => {
     let { _id, ...userToAdd } = user;
     UserService.addUser(userToAdd).then((data) =>
       setUsersInfo((currUserInfo) => ({
         users:
-          currUserInfo.count < 5
+          currUserInfo.count < page.usersPerPage
             ? [...usersInfo.users, data.user]
             : [...usersInfo.users],
         count: currUserInfo.count + 1,
@@ -57,7 +70,7 @@ const UserList = () => {
   const editUserHandler = (user) => {
     UserService.editUser(user).then((data) => {
       let unModifyUsers = usersInfo.users.filter(
-        (user) => user._id !== user._id
+        (value) => user._id != value._id
       );
       setUsersInfo((currUserInfo) => ({
         users: [...unModifyUsers, user],
@@ -111,7 +124,7 @@ const UserList = () => {
         {/* Overlap components */}
         <table className="table">
           <thead>
-            <UserTableThead />
+            <UserTableThead sortHeandler={sortHeandler} />
           </thead>
           <tbody>
             {/* Table row component */}

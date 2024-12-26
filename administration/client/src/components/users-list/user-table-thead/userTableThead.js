@@ -1,8 +1,31 @@
-const UserTableThead = () => {
+import { useEffect, useState } from "react";
+import Criterias from "../../../constants/Criterias.js";
+
+const UserTableThead = ({ sortHeandler }) => {
+  const [criteriaInfo, setCriteriaInfo] = useState({
+    criteria: Criterias.firstName,
+    order: false,
+  });
+
+  useEffect(() => {
+    sortHeandler(criteriaInfo);
+  }, [criteriaInfo]);
+
+  const sortHandler = (criteria) => {
+    setCriteriaInfo((value) => ({ criteria: criteria, order: value.order }));
+  };
+
+  const orderHeandler = (currOrder) => {
+    setCriteriaInfo((value) => ({
+      criteria: currOrder,
+      order: !value.order,
+    }));
+  };
+
   return (
     <tr>
       <th>Image</th>
-      <th>
+      <th onClick={() => sortHandler(Criterias.firstName)}>
         First name
         <svg
           className="icon"
@@ -13,6 +36,7 @@ const UserTableThead = () => {
           role="img"
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 384 512"
+          onClick={() => orderHeandler(Criterias.firstName)}
         >
           <path
             fill="currentColor"
@@ -20,7 +44,7 @@ const UserTableThead = () => {
           ></path>
         </svg>
       </th>
-      <th>
+      <th onClick={() => sortHandler(Criterias.lastName)}>
         Last name
         <svg
           className="icon"
@@ -31,6 +55,7 @@ const UserTableThead = () => {
           role="img"
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 384 512"
+          onClick={() => orderHeandler(Criterias.firstName)}
         >
           <path
             fill="currentColor"
@@ -38,7 +63,7 @@ const UserTableThead = () => {
           ></path>
         </svg>
       </th>
-      <th>
+      <th onClick={() => sortHandler(Criterias.email)}>
         Email
         <svg
           className="icon"
@@ -49,6 +74,7 @@ const UserTableThead = () => {
           role="img"
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 384 512"
+          onClick={() => orderHeandler(Criterias.firstName)}
         >
           <path
             fill="currentColor"
@@ -56,7 +82,7 @@ const UserTableThead = () => {
           ></path>
         </svg>
       </th>
-      <th>
+      <th onClick={() => sortHandler(Criterias.phone)}>
         Phone
         <svg
           className="icon"
@@ -67,6 +93,7 @@ const UserTableThead = () => {
           role="img"
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 384 512"
+          onClick={() => orderHeandler(Criterias.firstName)}
         >
           <path
             fill="currentColor"
@@ -74,7 +101,7 @@ const UserTableThead = () => {
           ></path>
         </svg>
       </th>
-      <th>
+      <th onClick={() => sortHandler(Criterias.created)}>
         Created
         <svg
           className="icon active-icon"
@@ -85,6 +112,7 @@ const UserTableThead = () => {
           role="img"
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 384 512"
+          onClick={() => orderHeandler(Criterias.firstName)}
         >
           <path
             fill="currentColor"
