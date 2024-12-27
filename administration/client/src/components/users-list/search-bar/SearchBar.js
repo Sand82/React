@@ -1,7 +1,6 @@
 import { useState } from "react";
-import Criterias from "../../../constants/Criterias.js";
 
-const SearchBar = () => {
+const SearchBar = ({ searchHeandler }) => {
   const [searchValue, setSearchValue] = useState("");
 
   const searchSubmitHeandler = (e) => {
@@ -9,7 +8,9 @@ const SearchBar = () => {
   };
 
   const searchValueChangeHeandler = (e) => {
-    console.log(e.target.value);
+    let value = e.target.value;    
+    setSearchValue(value);
+    searchHeandler(value);
   };
 
   return (
@@ -34,17 +35,22 @@ const SearchBar = () => {
       </h2>
       <div className="search-input-container">
         <input
+          id="search"
           type="text"
           placeholder="Please, select the search criteria"
           name="search"
-          value={searchValue}
+          defaultValue={searchValue}
           onChange={searchValueChangeHeandler}
         />
         {/* Show the clear button only if input field length !== 0 */}
         <button className="btn close-btn">
           <i className="fa-solid fa-xmark" />
         </button>
-        <button className="btn" title="Please, select the search criteria">
+        <button
+          className="btn"
+          type="submit"
+          title="Please, select the search criteria"
+        >
           <i className="fa-solid fa-magnifying-glass" />
         </button>
       </div>

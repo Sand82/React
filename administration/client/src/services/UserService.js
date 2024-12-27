@@ -1,9 +1,9 @@
 let url = "http://localhost:3005/api/users";
 
-///users?page=1&limit=5&search=Chris&criteria=firstName&sort=createdAt&order=desc
-export const getAll = (page, sortParams) => {
+export const getAll = (page, sortParams, searchValue) => {
+  console.log(sortParams);
   return fetch(
-    `${url}?page=${page.page}&limit=${page.usersPerPage}&sort=${sortParams.sortColumn}&order=${sortParams.direction}`
+    `${url}?page=${page.page}&limit=${page.usersPerPage}&search=${searchValue}&criteria=${sortParams.sortColumn}&sort=${sortParams.sortColumn}&order=${sortParams.direction}`
   ).then((res) => res.json());
 };
 

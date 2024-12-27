@@ -3,7 +3,7 @@ const Criterias = {
   firstName: "firstName",
   lastName: "lastName",
   email: "email",
-  phone: "phone",
+  phone: "phoneNumber",
   created: "created",
 };
 

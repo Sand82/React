@@ -17,16 +17,17 @@ const UserList = () => {
   const [usersInfo, setUsersInfo] = useState({ users: [], count: 0 });
   const [action, setAction] = useState({ user: null, action: null });
   const [page, setPage] = useState({ page: 1, usersPerPage: PageOptions[0] });
+  const [searchValue, setSearchValue] = useState("");
   const [sortParams, setSortParams] = useState({
     sortColumn: Criterias.firstName,
     direction: "asc",
   });
 
   useEffect(() => {
-    UserService.getAll(page, sortParams).then((data) =>
+    UserService.getAll(page, sortParams, searchValue).then((data) =>
       setUsersInfo({ users: data.users, count: data.count })
     );
-  }, [page, sortParams]);
+  }, [page, sortParams, searchValue]);
 
   const actionHandler = (userId, action) => {
     if (userId) {
@@ -51,6 +52,10 @@ const UserList = () => {
       sortColumn: params.criteria,
       direction: params.order ? "asc" : "desc",
     });
+  };
+
+  const searchHeandler = (value) => {
+    setSearchValue(value);
   };
 
   const addUserHandler = (user) => {
@@ -118,7 +123,7 @@ const UserList = () => {
 
       {/* Search bar component */}
       {/* <SearchBar /> */}
-      <SearchBar />
+      <SearchBar searchHeandler={searchHeandler} />
       {/* Table component */}
       <div className="table-wrapper">
         {/* Overlap components */}
