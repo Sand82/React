@@ -1,24 +1,25 @@
+import { Link } from "react-router-dom";
+
 const Header = () => {
-    
   return (
     <header>
       {/* Navigation */}
-      <a id="logo" href="/">
+      <Link id="logo" to="/">
         <img id="logo-img" src="./images/logo.png" alt="" />
-      </a>
+      </Link>
       <nav>
         <div>
-          <a href="#">Fun Facts</a>
+          <Link to="/fun-facts">Fun Facts</Link>
         </div>
         {/* Logged-in users */}
         <div className="user">
-          <a href="#">Add Fact</a>
-          <a href="#">Logout</a>
+          <Link to="/create">Add Fact</Link>
+          <Link to="#">Logout</Link>
         </div>
         {/* Guest users */}
         <div className="guest">
-          <a href="#">Login</a>
-          <a href="#">Register</a>
+          <Link to="/login">Login</Link>
+          <Link to="/register">Register</Link>
         </div>
       </nav>
     </header>
