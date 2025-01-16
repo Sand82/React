@@ -3,11 +3,7 @@ import { useState } from "react";
 import * as AuthValidator from "../validators/AuthValidator.js";
 
 const Login = () => {
-  const [loginUser, setLoginUser] = useState({
-    email: "",
-    password: "",
-  });
-
+  const [loginUser, setLoginUser] = useState({ email: "", password: "" });
   const [error, setError] = useState({ email: false, password: false });
 
   const loginSubmitHeandler = (e) => {
@@ -32,11 +28,11 @@ const Login = () => {
     }));
   };
 
-  const isValid =
-    Object.values(loginUser).some((value) => value.trim() === "") ||
-    Object.values(error).some((error) => error);
+  const isValid = false;
 
-  console.log(isValid);
+  if (Object.values(error).some((error) => error)) {
+    isValid = true;
+  }
 
   return (
     <section id="login">
@@ -61,7 +57,7 @@ const Login = () => {
             onChange={loginChangeHeandler}
             onBlur={loginErrors}
           />
-          <button disabled={isValid} type="submit">
+          <button disabled={!isValid} type="submit">
             login
           </button>
           <p className="message">
