@@ -1,13 +1,37 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 
 import * as AuthValidator from "../validators/AuthValidator.js";
+import * as AuthService from "../services/AuthService.js";
+import { AuthContext } from "../contexts/AuthContext.js";
 
 const Login = () => {
   const [loginUser, setLoginUser] = useState({ email: "", password: "" });
   const [error, setError] = useState({ email: false, password: false });
+  const [requestError, setRequestError] = useState({
+    message: "",
+    hasError: false,
+  });
+  const { usreLogin } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   const loginSubmitHeandler = (e) => {
     e.preventDefault();
+
+    AuthService.login(loginUser).then((response) => {
+      console.log(response);
+
+      if (response.code) {
+        setRequestError((error) => ({
+          message: response.message,
+          hasError: true,
+        }));
+        console.log(requestError);
+        return;
+      }
+      usreLogin({ response });
+      navigate("/");
+    });
   };
 
   const loginChangeHeandler = (e) => {
@@ -28,10 +52,10 @@ const Login = () => {
     }));
   };
 
-  const isValid = false;
+  let isNotValid = false;
 
   if (Object.values(error).some((error) => error)) {
-    isValid = true;
+    isNotValid = true;
   }
 
   return (
@@ -39,6 +63,9 @@ const Login = () => {
       <div className="form">
         <h2>Login</h2>
         <form className="login-form" onSubmit={loginSubmitHeandler}>
+          {requestError.hasError && (
+            <span className="server-error-massage">{requestError.message}</span>
+          )}
           <input
             type="text"
             name="email"
@@ -48,6 +75,11 @@ const Login = () => {
             onChange={loginChangeHeandler}
             onBlur={loginErrors}
           />
+          {error.email && (
+            <span className="field-error-message">
+              Email address is not valid!
+            </span>
+          )}
           <input
             type="password"
             name="password"
@@ -57,7 +89,12 @@ const Login = () => {
             onChange={loginChangeHeandler}
             onBlur={loginErrors}
           />
-          <button disabled={!isValid} type="submit">
+          {error.password && (
+            <span className="field-error-message">
+              Password should be more than 6 cheracters!
+            </span>
+          )}
+          <button disabled={isNotValid} type="submit">
             login
           </button>
           <p className="message">

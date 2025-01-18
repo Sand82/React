@@ -18,13 +18,27 @@
   box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
 }
 
+.server-error-massage {
+  font-size: 25px;
+  color: red;
+  display: inline-block;
+  margin-bottom: 10px;
+}
+
+.field-error-message {
+  font-size: 14px;
+  color: red;
+  display: inline-block;
+  margin-bottom: 10px;
+}
+
 .form h2 {
   margin-bottom: 50px;
   font-size: 30px;
   color: rgb(255, 0, 0);
 }
 
-.form input{
+.form input {
   border-radius: 10px;
   outline: 0;
   background: #ffffff;
@@ -45,11 +59,10 @@
   min-width: 99%;
   min-height: 50px;
   margin-bottom: 10px;
-
 }
 .form button {
-  font-family: 'Alkalami', serif;
-  font-family: 'Kaushan Script', cursive;
+  font-family: "Alkalami", serif;
+  font-family: "Kaushan Script", cursive;
   text-transform: uppercase;
   outline: 0;
   background: rgb(252, 9, 9);
@@ -61,7 +74,6 @@
   font-size: 14px;
   cursor: pointer;
   border-radius: 5px;
-  
 }
 .form button:hover,
 .form button:active,
@@ -92,9 +104,9 @@
   text-decoration: none;
 }
 
-#search .form h2{
-margin-top:-40px;
-margin-bottom: 0px;
+#search .form h2 {
+  margin-top: -40px;
+  margin-bottom: 0px;
   font-size: 30px;
   color: rgb(190, 103, 2);
 }
