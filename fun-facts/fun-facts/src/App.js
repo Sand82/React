@@ -8,6 +8,7 @@ import FunFactsList from "./fun-facts/FunFactsList.js";
 import FunFactsCreate from "./fun-facts/create/FunFactsCreate.js";
 import Register from "./components/Register.js";
 import Login from "./components/Login.js";
+import { AuthProvider } from "./contexts/AuthContext.js";
 
 function App() {
   return (
@@ -15,13 +16,15 @@ function App() {
       <>
         <div id="wrapper">
           <Header />
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/fun-facts" element={<FunFactsList />} />
-            <Route path="/create" element={<FunFactsCreate />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/login" element={<Login />} />
-          </Routes>
+          <AuthProvider>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/fun-facts" element={<FunFactsList />} />
+              <Route path="/create" element={<FunFactsCreate />} />
+              <Route path="/register" element={<Register />} />
+              <Route path="/login" element={<Login />} />
+            </Routes>
+          </AuthProvider>
         </div>
         <Footer />
       </>
