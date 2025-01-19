@@ -18,7 +18,7 @@ export const AuthProvider = ({ children }) => {
     removeValue("auth");
   };
 
-  const isUserLogin = isUserAuthenticate("auth")
+  const isUserLogin = isUserAuthenticate("auth");
 
   return (
     <AuthContext.Provider

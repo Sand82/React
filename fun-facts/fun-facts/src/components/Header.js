@@ -6,11 +6,8 @@ import { AuthContext } from "../contexts/AuthContext.js";
 const Header = () => {
   const { user, isUserLogin } = useContext(AuthContext);
 
-  console.log(isUserLogin);
-
   return (
     <header>
-      {/* Navigation */}
       <Link id="logo" to="/">
         <img id="logo-img" src="./images/logo.png" alt="" />
       </Link>
