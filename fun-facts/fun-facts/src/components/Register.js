@@ -28,12 +28,7 @@ const Register = () => {
   const registerSubmitHeandler = (e) => {
     e.preventDefault();
 
-    if (
-      Object.values(error).some((error) => error) ||
-      Object.values(registerUser).some(
-        (registerField) => registerField.trim() === ""
-      )
-    ) {
+    if (AuthValidator.stateValidator(error, registerUser)) {
       setRequestAndOtherError((error) => ({
         message: "Required valid email and password!",
         hasError: true,
@@ -42,11 +37,18 @@ const Register = () => {
       return;
     }
 
-    if (registerUser.password !== registerError.repeatPassword) {
+    let isNotValidConfirmation = AuthValidator.passwordsValidation(
+      registerUser.password,
+      registerError.repeatPassword
+    );
+
+    if (isNotValidConfirmation) {
       setRequestAndOtherError((error) => ({
         message: "Password and password confirmation should be equal!",
         hasError: true,
       }));
+
+      return;
     }
 
     let registerObject = {
@@ -74,7 +76,7 @@ const Register = () => {
   const registerError = (e) => {
     let currField = e.target.name;
 
-    let isFieldNotValid = AuthValidator.loginValidator(
+    let isFieldNotValid = AuthValidator.fieldsValidator(
       currField,
       e.target.value
     );

@@ -50,7 +50,7 @@ const Login = () => {
   const loginErrors = (e) => {
     let currField = e.target.name;
 
-    let isFieldNotValid = AuthValidator.loginValidator(
+    let isFieldNotValid = AuthValidator.fieldsValidator(
       currField,
       e.target.value
     );
@@ -67,7 +67,9 @@ const Login = () => {
         <h2>Login</h2>
         <form className="login-form" onSubmit={loginSubmitHeandler}>
           {requestAndOtherError.hasError && (
-            <span className="server-error-massage">{requestAndOtherError.message}</span>
+            <span className="server-error-massage">
+              {requestAndOtherError.message}
+            </span>
           )}
           <input
             type="text"

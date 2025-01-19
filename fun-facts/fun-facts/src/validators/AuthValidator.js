@@ -1,9 +1,5 @@
-export const loginValidator = (name, value) => {
+export const fieldsValidator = (name, value) => {
   let isNotValid = false;
-
-  if (value.trim().length === 0) {
-    return true;
-  }
 
   if (name === "email") {
     let regex = /^[a-zA-Z0-9]+@+[a-zA-Z0-9]+.+[A-z]/;
@@ -12,9 +8,22 @@ export const loginValidator = (name, value) => {
 
   if (name === "password" || name === "repeatPassword") {
     isNotValid = value.length < 6;
-  } 
+  }
 
   return isNotValid;
+};
+
+export const stateValidator = (error, userInput) => {
+  return (
+    Object.values(error).some((error) => error) ||
+    Object.values(userInput).some(
+      (registerField) => registerField.trim() === ""
+    )
+  );
+};
+
+export const passwordsValidation = (password, repeatPassword) => {
+  return password !== repeatPassword;
 };
 
 const stringChekerByRegex = (value, regexValue) => {
