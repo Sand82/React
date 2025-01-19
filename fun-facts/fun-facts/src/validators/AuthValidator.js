@@ -10,9 +10,9 @@ export const loginValidator = (name, value) => {
     isNotValid = stringChekerByRegex(value, regex);
   }
 
-  if (name === "password") {
+  if (name === "password" || name === "repeatPassword") {
     isNotValid = value.length < 6;
-  }
+  } 
 
   return isNotValid;
 };

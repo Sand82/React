@@ -8,7 +8,7 @@ import { AuthContext } from "../contexts/AuthContext.js";
 const Login = () => {
   const [loginUser, setLoginUser] = useState({ email: "", password: "" });
   const [error, setError] = useState({ email: false, password: false });
-  const [requestError, setRequestError] = useState({
+  const [requestAndOtherError, setRequestAndOtherError] = useState({
     message: "",
     hasError: false,
   });
@@ -18,15 +18,24 @@ const Login = () => {
   const loginSubmitHeandler = (e) => {
     e.preventDefault();
 
-    AuthService.login(loginUser).then((response) => {
-      console.log(response);
+    if (
+      Object.values(error).some((error) => error) ||
+      Object.values(loginUser).some((loginField) => loginField.trim() === "")
+    ) {
+      setRequestAndOtherError((error) => ({
+        message: "Required valid email and password!",
+        hasError: true,
+      }));
 
+      return;
+    }
+
+    AuthService.login(loginUser).then((response) => {
       if (response.code) {
-        setRequestError((error) => ({
+        setRequestAndOtherError((error) => ({
           message: response.message,
           hasError: true,
         }));
-        console.log(requestError);
         return;
       }
       usreLogin({ response });
@@ -52,19 +61,13 @@ const Login = () => {
     }));
   };
 
-  let isNotValid = false;
-
-  if (Object.values(error).some((error) => error)) {
-    isNotValid = true;
-  }
-
   return (
     <section id="login">
       <div className="form">
         <h2>Login</h2>
         <form className="login-form" onSubmit={loginSubmitHeandler}>
-          {requestError.hasError && (
-            <span className="server-error-massage">{requestError.message}</span>
+          {requestAndOtherError.hasError && (
+            <span className="server-error-massage">{requestAndOtherError.message}</span>
           )}
           <input
             type="text"
@@ -94,9 +97,7 @@ const Login = () => {
               Password should be more than 6 cheracters!
             </span>
           )}
-          <button disabled={isNotValid} type="submit">
-            login
-          </button>
+          <button type="submit">login</button>
           <p className="message">
             Not registered? <a href="#">Create an account</a>
           </p>
