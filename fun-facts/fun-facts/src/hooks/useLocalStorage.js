@@ -9,9 +9,15 @@ export const useLocalStorage = (key, defaultValue) => {
     setValue(newValue);
   };
 
-  const removeLocalStorageValue = (key) => {
+  const removeValue = (key) => {
     localStorage.removeItem(key);
-  }
+    setValue({});
+  };
 
-  return [value, setLocalStorageValue, removeLocalStorageValue];
+  const isUserAuthenticate = (key) => {
+    let value = JSON.parse(localStorage.getItem(key));    
+    return value;
+  };
+
+  return [value, setLocalStorageValue, removeValue, isUserAuthenticate];
 };

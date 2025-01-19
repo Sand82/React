@@ -37,9 +37,11 @@ const Register = () => {
       return;
     }
 
+    console.log(registerUser);
+
     let isNotValidConfirmation = AuthValidator.passwordsValidation(
       registerUser.password,
-      registerError.repeatPassword
+      registerUser.repeatPassword
     );
 
     if (isNotValidConfirmation) {

@@ -1,6 +1,5 @@
- @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap");
 body {
-
   background-image: url(../images/cover.png);
   /* background-repeat: no-repeat; */
   background-size: 100vw;
@@ -8,7 +7,7 @@ body {
   padding: 0;
   overflow: auto;
   width: 97vw;
-  font-family: 'Bebas Neue', sans-serif;
+  font-family: "Bebas Neue", sans-serif;
 }
 
 header {
@@ -20,41 +19,38 @@ header {
 }
 
 nav {
- 
   display: flex;
   justify-content: space-between;
-  
 }
 
+.user-email {
+  margin-top: 7px;
+  color: red;
+}
 
 #logo-img {
   height: 80px;
- 
 }
 
 nav a {
   font-size: 1.5rem;
   color: rgb(241, 10, 10);
-  font-weight: 400;  
+  font-weight: 400;
   text-shadow: 1px 1px black;
 }
 
 header a {
   padding: 0 10px;
   text-decoration: none;
-  
-  
 }
 nav a:hover {
   color: rgb(8, 8, 7);
   text-decoration: underline;
-
-  
 }
 
 footer {
   background-color: #e0ecf1;
-  color:  rgb(241, 10, 10);
+  color: rgb(241, 10, 10);
   font-weight: bolder;
   text-align: center;
   font-weight: 100;
@@ -66,9 +62,8 @@ footer {
   height: 20px;
 }
 footer p {
-  margin-top:-1px;
+  margin-top: -1px;
 }
-
 
 #home h1 {
   margin-top: 80px;

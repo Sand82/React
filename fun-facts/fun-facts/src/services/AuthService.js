@@ -10,6 +10,15 @@ export const register = (data) => {
   return fetch(`${url}/register`, requestObject).then((res) => res.json());
 };
 
+export const logout = (token) => {
+  return fetch(`${url}/logout`, {
+    method: "GET",
+    headers: {
+      "X-Authorization": `${token}`,
+    },
+  });
+};
+
 const createRequestObject = (data) => {
   return {
     method: "POST",

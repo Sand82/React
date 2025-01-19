@@ -38,7 +38,8 @@ const Login = () => {
         }));
         return;
       }
-      usreLogin({ response });
+      
+      usreLogin(response);
       navigate("/");
     });
   };
