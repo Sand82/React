@@ -2,6 +2,7 @@ import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 
 import * as AuthValidator from "../validators/AuthValidator.js";
+import * as StateValidator from "../validators/StateValidator.js";
 import * as AuthService from "../services/AuthService.js";
 import { AuthContext } from "../contexts/AuthContext.js";
 
@@ -28,14 +29,14 @@ const Register = () => {
   const registerSubmitHeandler = (e) => {
     e.preventDefault();
 
-    if (AuthValidator.stateValidator(error, registerUser)) {
+    if (StateValidator.validateState(error, registerUser)) {
       setRequestAndOtherError((error) => ({
         message: "Required valid email and password!",
         hasError: true,
       }));
 
       return;
-    }    
+    }
 
     let isNotValidConfirmation = AuthValidator.passwordsValidation(
       registerUser.password,

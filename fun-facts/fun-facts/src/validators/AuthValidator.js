@@ -13,15 +13,6 @@ export const fieldsValidator = (name, value) => {
   return isNotValid;
 };
 
-export const stateValidator = (error, userInput) => {
-  return (
-    Object.values(error).some((error) => error) ||
-    Object.values(userInput).some(
-      (registerField) => registerField.trim() === ""
-    )
-  );
-};
-
 export const passwordsValidation = (password, repeatPassword) => {
   return password !== repeatPassword;
 };

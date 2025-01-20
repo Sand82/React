@@ -2,6 +2,7 @@ import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 
 import * as AuthValidator from "../validators/AuthValidator.js";
+import * as StateValidator from "../validators/StateValidator.js";
 import * as AuthService from "../services/AuthService.js";
 import { AuthContext } from "../contexts/AuthContext.js";
 
@@ -18,10 +19,7 @@ const Login = () => {
   const loginSubmitHeandler = (e) => {
     e.preventDefault();
 
-    if (
-      Object.values(error).some((error) => error) ||
-      Object.values(loginUser).some((loginField) => loginField.trim() === "")
-    ) {
+    if (StateValidator.validateState(error, loginUser)) {
       setRequestAndOtherError((error) => ({
         message: "Required valid email and password!",
         hasError: true,
@@ -38,7 +36,7 @@ const Login = () => {
         }));
         return;
       }
-      
+
       usreLogin(response);
       navigate("/");
     });

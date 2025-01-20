@@ -8,15 +8,10 @@ const Logout = () => {
   const { user, userLogout } = useContext(AuthContext);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    
-    if (user.accessToken) {
-      AuthService.logout(user.accessToken);
-      userLogout();
-    }
-    
-    navigate("/");
-  }, []);
+  AuthService.logout(user.accessToken);
+  userLogout();
+
+  navigate("/");
 
   return <></>;
 };
