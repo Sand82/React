@@ -10,6 +10,7 @@ import Register from "./components/Register.js";
 import Login from "./components/Login.js";
 import { AuthProvider } from "./contexts/AuthContext.js";
 import Logout from "./components/Logout.js";
+import FunFactDetail from "./fun-facts/detail/FunFactDetail.js";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
               <Route path="/" element={<Home />} />
               <Route path="/fun-facts" element={<FunFactsList />} />
               <Route path="/create" element={<FunFactCreate />} />
+              <Route path="/fun-facts/detail/:id" element={<FunFactDetail />} />
               <Route path="/register" element={<Register />} />
               <Route path="/login" element={<Login />} />
               <Route path="/logout" element={<Logout />} />

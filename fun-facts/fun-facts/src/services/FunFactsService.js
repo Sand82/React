@@ -4,6 +4,10 @@ export const getAll = () => {
   return fetch(url).then((res) => res.json());
 };
 
+export const getOne = (funFactId) => {
+  return fetch(`${url}/${funFactId}`).then((res) => res.json());
+} 
+
 export const create = (data, token) => {
   return fetch(url, {
     method: "POST",
