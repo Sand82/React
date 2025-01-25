@@ -35,7 +35,7 @@ const FunFactDetail = () => {
                 <Link to="/" id="edit-btn">
                   Edit
                 </Link>
-                <Link to="/" id="delete-btn">
+                <Link to={`/fun-facts/delete/${id}`} id="delete-btn">
                   Delete
                 </Link>
               </>

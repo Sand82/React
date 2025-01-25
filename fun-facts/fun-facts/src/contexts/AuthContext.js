@@ -5,25 +5,18 @@ import { useLocalStorage } from "../hooks/useLocalStorage.js";
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [auth, setAuth, removeValue, isUserAuthenticate] = useLocalStorage(
-    "auth",
-    {}
-  );
+  const [auth, setAuth] = useLocalStorage("auth");
 
   const usreLogin = (authData) => {
     setAuth(authData);
   };
 
   const userLogout = () => {
-    removeValue("auth");
+    setAuth({});
   };
 
-  const isUserLogin = isUserAuthenticate("auth");
-
   return (
-    <AuthContext.Provider
-      value={{ user: auth, usreLogin, userLogout, isUserLogin }}
-    >
+    <AuthContext.Provider value={{ user: auth, usreLogin, userLogout }}>
       {children}
     </AuthContext.Provider>
   );

@@ -6,10 +6,10 @@ import Header from "./components/Header.js";
 import Home from "./home/Home.js";
 import FunFactsList from "./fun-facts/FunFactsList.js";
 import FunFactCreate from "./fun-facts/create/FunFactCreate.js";
+import FunFactDelete from "./fun-facts/delete/FunFactDelete.js";
 import Register from "./components/Register.js";
 import Login from "./components/Login.js";
 import { AuthProvider } from "./contexts/AuthContext.js";
-import Logout from "./components/Logout.js";
 import FunFactDetail from "./fun-facts/detail/FunFactDetail.js";
 
 function App() {
@@ -24,9 +24,9 @@ function App() {
               <Route path="/fun-facts" element={<FunFactsList />} />
               <Route path="/create" element={<FunFactCreate />} />
               <Route path="/fun-facts/detail/:id" element={<FunFactDetail />} />
+              <Route path="/fun-facts/delete/:id" element={<FunFactDelete />} />
               <Route path="/register" element={<Register />} />
               <Route path="/login" element={<Login />} />
-              <Route path="/logout" element={<Logout />} />
             </Routes>
           </div>
           <Footer />

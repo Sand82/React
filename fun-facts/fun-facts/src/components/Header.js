@@ -1,10 +1,19 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useContext } from "react";
 
 import { AuthContext } from "../contexts/AuthContext.js";
+import * as AuthService from "../services/AuthService.js";
 
 const Header = () => {
-  const { user, isUserLogin } = useContext(AuthContext);
+  const { user, userLogout } = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  const logoutHeandler = () => {
+    AuthService.logout(user.accessToken);
+    userLogout();
+
+    navigate("/");
+  };
 
   return (
     <header>
@@ -12,14 +21,16 @@ const Header = () => {
         <img id="logo-img" src="./images/logo.png" alt="" />
       </Link>
       <nav>
-        {isUserLogin && <div className="user-email">{user.email}</div>}
+        {user.email && <div className="user-email">{user.email}</div>}
         <div>
           <Link to="/fun-facts">Fun Facts</Link>
         </div>
-        {isUserLogin ? (
+        {user.email ? (
           <div className="user">
             <Link to="/create">Add Fact</Link>
-            <Link to="/logout">Logout</Link>
+            <Link to="#" onClick={logoutHeandler}>
+              Logout
+            </Link>
           </div>
         ) : (
           <div className="guest">

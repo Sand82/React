@@ -1,26 +1,18 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-export const useLocalStorage = (key, defaultValue) => {
-  const [value, setValue] = useState(defaultValue);
+export const useLocalStorage = (key) => {
+  const [value, setValue] = useState({});
+
+  useEffect(() => {
+    let currUserInfo = localStorage.getItem(key);
+    let currValue = currUserInfo ? JSON.parse(currUserInfo) : {};
+    setValue(currValue);
+  }, []);
 
   const setLocalStorageValue = (newValue) => {
     localStorage.setItem(key, JSON.stringify(newValue));
     setValue(newValue);
   };
 
-  const removeValue = (key) => {
-    localStorage.removeItem(key);
-    setValue({});
-  };
-
-  const isUserAuthenticate = (key) => {
-    let value = JSON.parse(localStorage.getItem(key));
-
-    if (value) {
-      return true;
-    }
-    return false;
-  };
-
-  return [value, setLocalStorageValue, removeValue, isUserAuthenticate];
+  return [value, setLocalStorageValue];
 };
