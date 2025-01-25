@@ -32,7 +32,7 @@ const FunFactDetail = () => {
           <div id="action-buttons">
             {isCurrentUser && (
               <>
-                <Link to="/" id="edit-btn">
+                <Link to={`/fun-facts/edit/${id}`} id="edit-btn">
                   Edit
                 </Link>
                 <Link to={`/fun-facts/delete/${id}`} id="delete-btn">

@@ -16,6 +16,14 @@ export const create = (data, token) => {
   });
 };
 
+export const edit = (data, token, funFactId) => {
+  return fetch(`${url}/${funFactId}`, {
+    method: "PUT",
+    headers: createHeaders(token),
+    body: JSON.stringify(data),
+  });
+};
+
 export const remove = (funFactId, token) => {
   return fetch(`${url}/${funFactId}`, {
     method: "DELETE",

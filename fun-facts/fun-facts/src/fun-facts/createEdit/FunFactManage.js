@@ -1,12 +1,13 @@
-import { useState, useContext } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState, useContext, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 
 import * as FunFactValidator from "../../validators/FunFactValidator.js";
 import * as FunFactService from "../../services/FunFactsService.js";
 import * as StateValidator from "../../validators/StateValidator.js";
 import { AuthContext } from "../../contexts/AuthContext.js";
+import * as Modification from "../../services/Modification.js";
 
-const FunFactCreate = () => {
+const FunFactManage = ({ type }) => {
   const [funFact, setFunFact] = useState({
     category: "",
     imageUrl: "",
@@ -28,6 +29,13 @@ const FunFactCreate = () => {
 
   const { user } = useContext(AuthContext);
   const navigate = useNavigate();
+  const { id } = useParams();
+
+  useEffect(() => {
+    FunFactService.getOne(id).then((response) =>
+      setFunFact((state) => (state = response))
+    );
+  }, [id]);
 
   const funFactSubmitHeandler = (e) => {
     e.preventDefault();
@@ -41,16 +49,11 @@ const FunFactCreate = () => {
       return;
     }
 
-    FunFactService.create(funFact, user.accessToken).then((response) => {
-      if (response.ok) {
-        navigate("/fun-facts");
-      } else {
-        setValidationError((error) => ({
-          message: "Something heppened try again later!",
-          hasError: true,
-        }));
-      }
-    });
+    if (type === Modification.type.create) {
+      createFunFact();
+    } else {
+      editFunFact("PUT");
+    }
   };
 
   const funFactChangeHeandler = (e) => {
@@ -71,10 +74,39 @@ const FunFactCreate = () => {
     }));
   };
 
+  const createFunFact = () => {
+    FunFactService.create(funFact, user.accessToken).then((response) => {
+      if (response.ok) {
+        navigate("/fun-facts");
+      } else {
+        addValidationError();
+      }
+    });
+  };
+
+  const editFunFact = () => {
+    FunFactService.edit(funFact, user.accessToken, id).then((response) => {
+      if (response.ok) {
+        navigate("/fun-facts");
+      } else {
+        addValidationError();
+      }
+    });
+  };
+
+  const addValidationError = () => {
+    setValidationError((error) => ({
+      message: "Something heppened try again later!",
+      hasError: true,
+    }));
+  };
+
+  let formType = type == Modification.type.create ? "Add Fact" : "Edit Fact";
+
   return (
     <section id="create">
       <div className="form">
-        <h2>Add Fact</h2>
+        <h2>{formType}</h2>
         {validationError.hasError && (
           <span className="server-error-massage">
             {validationError.message}
@@ -139,11 +171,11 @@ const FunFactCreate = () => {
               Additional information should be more than 6 characters!
             </span>
           )}
-          <button type="submit">Add Fact</button>
+          <button type="submit">{formType}</button>
         </form>
       </div>
     </section>
   );
 };
 
-export default FunFactCreate;
+export default FunFactManage;
