@@ -3,15 +3,44 @@ import { Link, useParams } from "react-router-dom";
 
 import * as FunFactsService from "../../services/FunFactsService.js";
 import { AuthContext } from "../../contexts/AuthContext.js";
+import * as LikeService from "../../services/LikeService.js";
 
 const FunFactDetail = () => {
   const [funFact, setFunFact] = useState({});
+  const [funFactLike, setFunFactLike] = useState({ isLiked: false, count: 0 });
   const { user } = useContext(AuthContext);
   const { id } = useParams();
 
   useEffect(() => {
     FunFactsService.getOne(id).then((res) => setFunFact(res));
   }, [id]);
+
+  useEffect(() => {
+    LikeService.getTotalLikes(id, user.accessToken).then((response) =>
+      setFunFactLike((state) => ({
+        ...state,
+        count: response,
+      }))
+    );
+  }, [id]);
+
+  useEffect(() => {
+    LikeService.getUserLike(id, user._id, user.accessToken).then((response) =>
+      setFunFactLike((state) => ({
+        ...state,
+        isLiked: response == 1 ? true : false,
+      }))
+    );
+  }, [id, user._id]);
+
+  const likeHeandler = () => {
+    const factId = { factId: id };
+    LikeService.postLike(factId, user.accessToken).then((response) => {
+      if (response.ok) {
+        setFunFactLike((state) => ({ isLiked: true, count: state.count + 1 }));
+      }
+    });
+  };
 
   let isCurrentUser = funFact._ownerId === user._id;
 
@@ -26,7 +55,7 @@ const FunFactDetail = () => {
             <p id="more-info">{funFact.moreInfo}</p>
           </div>
           <h3>
-            Likes:<span id="likes">0</span>
+            Likes:<span id="likes">{funFactLike.count}</span>
           </h3>
 
           <div id="action-buttons">
@@ -40,10 +69,10 @@ const FunFactDetail = () => {
                 </Link>
               </>
             )}
-            {user && (
-              <a href="" id="like-btn">
+            {user && !isCurrentUser && !funFactLike.isLiked && (
+              <Link onClick={likeHeandler} id="like-btn">
                 Like
-              </a>
+              </Link>
             )}
           </div>
         </div>

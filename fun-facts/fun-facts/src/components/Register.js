@@ -66,7 +66,7 @@ const Register = () => {
         return;
       }
       usreLogin({ response });
-      navigate("/");
+      navigate("/login");
     });
   };
 

@@ -1,3 +1,5 @@
+import * as ServiceUtiles from "./ServiceUtiles.js";
+
 const url = "http://localhost:3030/data/facts";
 
 export const getAll = () => {
@@ -11,7 +13,7 @@ export const getOne = (funFactId) => {
 export const create = (data, token) => {
   return fetch(url, {
     method: "POST",
-    headers: createHeaders(token),
+    headers: ServiceUtiles.createHeaders(token),
     body: JSON.stringify(data),
   });
 };
@@ -19,7 +21,7 @@ export const create = (data, token) => {
 export const edit = (data, token, funFactId) => {
   return fetch(`${url}/${funFactId}`, {
     method: "PUT",
-    headers: createHeaders(token),
+    headers: ServiceUtiles.createHeaders(token),
     body: JSON.stringify(data),
   });
 };
@@ -27,13 +29,6 @@ export const edit = (data, token, funFactId) => {
 export const remove = (funFactId, token) => {
   return fetch(`${url}/${funFactId}`, {
     method: "DELETE",
-    headers: createHeaders(token),
+    headers: ServiceUtiles.createHeaders(token),
   });
-};
-
-const createHeaders = (token) => {
-  return {
-    "Content-Type": "application/json",
-    "X-Authorization": `${token}`,
-  };
 };

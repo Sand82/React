@@ -48,11 +48,11 @@ const FunFactManage = ({ type }) => {
 
       return;
     }
-
+    console.log(type);
     if (type === Modification.type.create) {
       createFunFact();
     } else {
-      editFunFact("PUT");
+      editFunFact();
     }
   };
 
