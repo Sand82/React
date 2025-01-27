@@ -1,0 +1,248 @@
+<div id="wrapper">
+    <header>
+      {/* Navigation */}
+      <a id="logo" href="/">
+        <img id="logo-img" src="./images/logo.png" alt="" />
+      </a>
+      <nav>
+        <div>
+          <a href="#">Motorcycles</a>
+          <a href="#">Search</a>
+        </div>
+        {/* Logged-in users */}
+        <div className="user">
+          <a href="#">Add Motorcycle</a>
+          <a href="#">Logout</a>
+        </div>
+        {/* Guest users */}
+        <div className="guest">
+          <a href="#">Login</a>
+          <a href="#">Register</a>
+        </div>
+      </nav>
+    </header>
+    <main>
+      {/* Home page */}
+      <section id="home">
+        <h1>
+          Welcome to <span>Samurider</span> moto market, your premier destination
+          for Japanese motorcycles.
+        </h1>
+        <img src="./images/motorcycle.png" alt="home" />
+      </section>
+      {/* Dashboard page */}
+      <h2>Available Motorcycles</h2>
+      <section id="dashboard">
+        {/* Display a div with information about every post (if any)*/}
+        <div className="motorcycle">
+          <img src="./images/Honda Hornet.png" alt="example1" />
+          <h3 className="model">Honda Hornet</h3>
+          <p className="year">Year: 2006</p>
+          <p className="mileage">Mileage: 45000 km.</p>
+          <p className="contact">Contact Number: 0881234567</p>
+          <a className="details-btn" href="#">
+            More Info
+          </a>
+        </div>
+        <div className="motorcycle">
+          <img src="./images/Kawasaki er6n.png" alt="example1" />
+          <h3 className="model">Kawasaki er6n</h3>
+          <p className="year">Year: 2016</p>
+          <p className="mileage">Mileage: 10000 km.</p>
+          <p className="contact">Contact Number: 0884567123</p>
+          <a className="details-btn" href="#">
+            More Info
+          </a>
+        </div>
+        <div className="motorcycle">
+          <img src="./images/Yamaha mt 07.png" alt="example1" />
+          <h3 className="model">Yamaha mt 07</h3>
+          <p className="year">Year: 2017</p>
+          <p className="mileage">Mileage: 15000 km.</p>
+          <p className="contact">Contact Number: 0886714523</p>
+          <a className="details-btn" href="#">
+            More Info
+          </a>
+        </div>
+      </section>
+      {/* Display an h2 if there are no posts */}
+      <h2 className="no-avaliable">No avaliable motorcycles yet.</h2>
+      {/* Register Page (Only for Guest users) */}
+      <section id="register">
+        <div className="form">
+          <h2>Register</h2>
+          <form className="register-form">
+            <input
+              type="text"
+              name="email"
+              id="register-email"
+              placeholder="email"
+            />
+            <input
+              type="password"
+              name="password"
+              id="register-password"
+              placeholder="password"
+            />
+            <input
+              type="password"
+              name="re-password"
+              id="repeat-password"
+              placeholder="repeat password"
+            />
+            <button type="submit">register</button>
+            <p className="message">
+              Already registered? <a href="#">Login</a>
+            </p>
+          </form>
+        </div>
+      </section>
+      {/* Login Page (Only for Guest users) */}
+      <section id="login">
+        <div className="form">
+          <h2>Login</h2>
+          <form className="login-form">
+            <input type="text" name="email" id="email" placeholder="email" />
+            <input
+              type="password"
+              name="password"
+              id="password"
+              placeholder="password"
+            />
+            <button type="submit">login</button>
+            <p className="message">
+              Not registered? <a href="#">Create an account</a>
+            </p>
+          </form>
+        </div>
+      </section>
+      {/* Create Page (Only for logged-in users) */}
+      <section id="create">
+        <h2>Add Motorcycle</h2>
+        <div className="form">
+          <h2>Add Motorcycle</h2>
+          <form className="create-form">
+            <input type="text" name="model" id="model" placeholder="Model" />
+            <input
+              type="text"
+              name="imageUrl"
+              id="moto-image"
+              placeholder="Moto Image"
+            />
+            <input type="number" name="year" id="year" placeholder="Year" />
+            <input
+              type="number"
+              name="mileage"
+              id="mileage"
+              placeholder="mileage"
+            />
+            <input
+              type="text"
+              name="contact"
+              id="contact"
+              placeholder="contact"
+            />
+            <textarea
+              id="about"
+              name="about"
+              placeholder="about"
+              rows={10}
+              cols={50}
+              defaultValue={""}
+            />
+            <button type="submit">Add Motorcycle</button>
+          </form>
+        </div>
+      </section>
+      {/* Edit Page (Only for logged-in users) */}
+      <section id="edit">
+        <h2>Edit Motorcycle</h2>
+        <div className="form">
+          <h2>Edit Motorcycle</h2>
+          <form className="edit-form">
+            <input type="text" name="model" id="model" placeholder="Model" />
+            <input
+              type="text"
+              name="imageUrl"
+              id="moto-image"
+              placeholder="Moto Image"
+            />
+            <input type="number" name="year" id="year" placeholder="Year" />
+            <input
+              type="number"
+              name="mileage"
+              id="mileage"
+              placeholder="mileage"
+            />
+            <input
+              type="number"
+              name="contact"
+              id="contact"
+              placeholder="contact"
+            />
+            <textarea
+              id="about"
+              name="about"
+              placeholder="about"
+              rows={10}
+              cols={50}
+              defaultValue={""}
+            />
+            <button type="submit">Edit Motorcycle</button>
+          </form>
+        </div>
+      </section>
+      {/* Details page */}
+      <section id="details">
+        <div id="details-wrapper">
+          <img id="details-img" src="./images/Honda Hornet.png" alt="example1" />
+          <p id="details-title">Honda Hornet</p>
+          <div id="info-wrapper">
+            <div id="details-description">
+              <p className="year">Year: 2006</p>
+              <p className="mileage">Mileage: 45000 km.</p>
+              <p className="contact">Contact Number: 0881234567</p>
+              <p id="motorcycle-description">
+                The Honda Hornet 2006 is a popular naked street bike known for its
+                sporty design and powerful performance. It features a 599cc
+                inline-four engine, delivering a thrilling riding experience with
+                its responsive acceleration and agile handling.
+              </p>
+            </div>
+            {/*Edit and Delete are only for creator*/}
+            <div id="action-buttons">
+              <a href="" id="edit-btn">
+                Edit
+              </a>
+              <a href="" id="delete-btn">
+                Delete
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+      {/* Search page */}
+      <section id="search">
+        <div className="form">
+          <h4>Search</h4>
+          <form className="search-form">
+            <input type="text" name="search" id="search-input" />
+            <button className="button-list">Search</button>
+          </form>
+        </div>
+        <h4 id="result-heading">Results:</h4>
+        <div className="search-result">
+          <h2 className="no-avaliable">No result.</h2>
+          {/*If there are matches display a div with information about every motorcycle*/}
+          <div className="motorcycle">
+            <img src="./images/Honda Hornet.png" alt="example1" />
+            <h3 className="model">Honda Hornet</h3>
+            <a className="details-btn" href="">
+              More Info
+            </a>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+  
