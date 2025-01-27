@@ -5,6 +5,7 @@ import Catalog from "./components/catalog/Catalog.js";
 import Home from "./components/Home.js";
 import Login from "./components/Login.js";
 import Register from "./components/Register.js";
+import MotorDetails from "./components/catalog/details/MotorDetails.js";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/catalog" element={<Catalog />} />
+          <Route path="/catalog/details/:id" element={<MotorDetails />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
         </Routes>

@@ -29,9 +29,7 @@ const Catalog = () => {
     motorsInfo = (
       <h2 className="no-avaliable">No avaliable motorcycles yet.</h2>
     );
-  }
-
-  console.log(motors[0]);
+  }  
 
   return motorsInfo;
 };

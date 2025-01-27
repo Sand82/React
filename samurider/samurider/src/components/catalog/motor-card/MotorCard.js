@@ -8,7 +8,7 @@ const MotorCard = ({ motorInfo }) => {
       <p className={motorInfo.year}>Year: 2006</p>
       <p className={motorInfo.mileage}>Mileage: 45000 km.</p>
       <p className={motorInfo.contact}>Contact Number: 0881234567</p>
-      <Link className="details-btn" to={`/catalog/detail/${motorInfo._id}`}>
+      <Link className="details-btn" to={`/catalog/details/${motorInfo._id}`}>
         More Info
       </Link>
     </div>
