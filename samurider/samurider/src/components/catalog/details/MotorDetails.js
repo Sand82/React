@@ -11,9 +11,7 @@ const MotorDetails = () => {
     MotorService.getOne(id).then((response) =>
       setMotor((state) => (state = response))
     );
-  }, [id]);
-
-  console.log(motor);
+  }, [id]); 
 
   return (
     <section id="details">

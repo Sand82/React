@@ -7,7 +7,7 @@ export const useLocalStorage = (key) => {
     let currUserInfo = localStorage.getItem(key);
     let currValue = currUserInfo ? JSON.parse(currUserInfo) : {};
     setValue(currValue);
-  }, []);
+  }, [key]);
 
   const setLocalStorageValue = (newValue) => {
     localStorage.setValue(key, JSON.stringify(newValue));
