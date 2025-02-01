@@ -6,7 +6,7 @@ import Home from "./components/Home.js";
 import Login from "./components/Login.js";
 import Register from "./components/Register.js";
 import MotorDetails from "./components/catalog/details/MotorDetails.js";
-import { AuthProvider } from "./contecst/AuthContext.js";
+import { AuthProvider } from "./contexts/AuthContext.js";
 
 function App() {
   return (
