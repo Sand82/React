@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import * as AuthValidator from "../validators/AuthValidator.js";
 import * as StateValidator from "../validators/StateValidator.js";
 import * as AuthService from "../services/AuthService.js";
-import * as AuthContext from "../contexts/AuthContext.js";
+import { AuthContext } from "../contexts/AuthContext.js";
 
 const Login = () => {
   const [loginCredential, setLoginCredential] = useState({
@@ -25,8 +25,6 @@ const Login = () => {
   const { userLogin } = useContext(AuthContext);
   const navigate = useNavigate();
 
-  console.log(userLogin);
-
   const loginSubmitHeandler = (e) => {
     e.preventDefault();
 
@@ -40,6 +38,7 @@ const Login = () => {
     }
 
     AuthService.login(loginCredential).then((response) => {
+      console.log(response);
       if (response.code) {
         setRequestAndOtherError((error) => ({
           message: response.message,
