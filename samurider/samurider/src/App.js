@@ -1,12 +1,12 @@
 import { Route, Routes } from "react-router-dom";
 
-import Header from "./components/Header.js";
-import Catalog from "./components/catalog/Catalog.js";
-import Home from "./components/Home.js";
-import Login from "./components/Login.js";
-import Register from "./components/Register.js";
-import MotorDetails from "./components/catalog/details/MotorDetails.js";
-import { AuthProvider } from "./contexts/AuthContext.js";
+import Header from "./components/Header.jsx";
+import Catalog from "./components/catalog/Catalog.jsx";
+import Home from "./components/Home.jsx";
+import Login from "./components/Login.jsx";
+import Register from "./components/Register.jsx";
+import MotorDetails from "./components/catalog/details/MotorDetails.jsx";
+import { AuthProvider } from "./contexts/AuthContext.jsx";
 
 function App() {
   return (

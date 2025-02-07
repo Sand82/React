@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 import * as MotorService from "../../services/MotorService.js";
-import MotorCard from "./motor-card/MotorCard.js";
+import MotorCard from "./motor-card/MotorCard.jsx";
 
 const Catalog = () => {
   const [motors, setMotors] = useState([]);
@@ -29,7 +29,7 @@ const Catalog = () => {
     motorsInfo = (
       <h2 className="no-avaliable">No avaliable motorcycles yet.</h2>
     );
-  }  
+  }
 
   return motorsInfo;
 };
