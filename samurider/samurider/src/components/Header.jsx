@@ -13,7 +13,7 @@ const Header = () => {
     userLogout();
 
     navigate("/");
-  };
+  }; 
 
   return (
     <header>
@@ -21,7 +21,7 @@ const Header = () => {
         <img id="logo-img" src="./images/logo.png" alt="" />
       </Link>
       <nav>
-        {user.email && <div className="user-email">{user.email}</div>}
+        {user.email && <div className="nav-user-email">{user.email}</div>}
         <div>
           <Link to="/catalog">Motorcycles</Link>
           <Link to="#">Search</Link>
@@ -29,7 +29,7 @@ const Header = () => {
 
         {user.email ? (
           <div className="user">
-            <Link to="#">Add Motorcycle</Link>
+            <Link to="/create">Add Motorcycle</Link>
             <Link onClick={logoutHeandler} to="/">
               Logout
             </Link>

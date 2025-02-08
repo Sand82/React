@@ -7,6 +7,7 @@ import Login from "./components/Login.jsx";
 import Register from "./components/Register.jsx";
 import MotorDetails from "./components/catalog/details/MotorDetails.jsx";
 import { AuthProvider } from "./contexts/AuthContext.jsx";
+import MotorCreate from "./components/catalog/create/MotorCreate.jsx";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/catalog" element={<Catalog />} />
+            <Route path="/create" element={<MotorCreate />} />
             <Route path="/catalog/details/:id" element={<MotorDetails />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />

@@ -34,6 +34,13 @@ nav {
  
 }
 
+.nav-user-email {
+  display: flex;
+  align-self: center;
+  color: red;
+  padding: 3px;
+}
+
 nav a {
   font-size: 1.5rem;
   color: rgb(240, 0, 0);

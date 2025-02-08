@@ -5,7 +5,7 @@ import * as AuthService from "../services/AuthService.js";
 import Input from "../components/UI/Input.jsx"
 import { useInput } from "../hooks/useInput.js"
 import { isEmail, isNotEmpty, hasMinLength, isEqualToOtherValue } from "../validators/Validation.js";
-import * as passwordMinLength from "../constants/GlobalConstants.js"
+import * as Constant from "../constants/GlobalConstants.js"
 
 const Register = () => {  
 
@@ -23,7 +23,7 @@ const Register = () => {
      inputBlurHeandler: passwordInputBluerHeandler,
    } = useInput(
      "",
-     (value) => hasMinLength(value, passwordMinLength) && isNotEmpty(value)
+     (value) => hasMinLength(value, Constant.passwordMinLength) && isNotEmpty(value)
    );
 
    const {
@@ -33,7 +33,7 @@ const Register = () => {
     inputBlurHeandler: repeatPasswordInputBluerHeandler,
   } = useInput(
     "",
-    (value) => hasMinLength(value, passwordMinLength) && isNotEmpty(value)
+    (value) => hasMinLength(value, Constant.passwordMinLength) && isNotEmpty(value)
   );
 
   const [requestAndOtherError, setRequestAndOtherError] = useState({
@@ -110,7 +110,7 @@ const Register = () => {
             value={passwordValue}
             onChange={passwordChangeHeandler}
             onBlur={passwordInputBluerHeandler}
-            error={passwordError && "Password should be more than 6 cheracters!"}
+            error={passwordError && `Password should be more than ${Constant.passwordMinLength} cheracters!`}
           />          
           <Input
             label={"Password confirmation"}

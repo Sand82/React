@@ -6,16 +6,19 @@ export const useInput = (defaultValue, validationFn) => {
 
   const changeHeandler = (e) => {
     setValue(e.target.value);
+    setDidEdit(true);
   };
 
+  let isNotValidValue = validationFn(value);
+
   const inputBlurHeandler = (e) => {
-    setDidEdit(validationFn(e.target.value));
+    setDidEdit(false);
   };
 
   return {
     value,
     changeHeandler,
     inputBlurHeandler,
-    hasError: didEdit,
+    hasError: didEdit && !isNotValidValue,
   };
 };

@@ -6,7 +6,7 @@ import { AuthContext } from "../contexts/AuthContext.jsx";
 import Input from "./UI/Input.jsx";
 import { useInput } from "../hooks/useInput.js";
 import { isEmail, isNotEmpty, hasMinLength } from "../validators/Validation.js";
-import * as passwordMinLength from "../constants/GlobalConstants.js"
+import * as Constant from "../constants/GlobalConstants.js"
 
 const Login = () => {
   const {
@@ -23,7 +23,7 @@ const Login = () => {
     inputBlurHeandler: passwordInputBluerHeandler,
   } = useInput(
     "",
-    (value) => hasMinLength(value, passwordMinLength) && isNotEmpty(value)
+    (value) => hasMinLength(value, Constant.passwordMinLength) && isNotEmpty(value)
   );
 
   const [requestError, setRequestError] = useState({
@@ -89,7 +89,7 @@ const Login = () => {
             onBlur={passwordInputBluerHeandler}
             error={
               passwordError &&
-              `Password shoud be more than ${passwordMinLength} symbols!`
+              `Password shoud be more than ${Constant.passwordMinLength} symbols!`
             }
           />
           <button type="submit">login</button>
