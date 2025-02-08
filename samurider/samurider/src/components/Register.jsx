@@ -1,22 +1,40 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
-import * as AuthValidator from "../validators/AuthValidator.js";
-import * as StateValidator from "../validators/StateValidator.js";
 import * as AuthService from "../services/AuthService.js";
+import Input from "../components/UI/Input.jsx"
+import { useInput } from "../hooks/useInput.js"
+import { isEmail, isNotEmpty, hasMinLength, isEqualToOtherValue } from "../validators/Validation.js";
+import * as passwordMinLength from "../constants/GlobalConstants.js"
 
-const Register = () => {
-  const [registerCredential, setRegisterCredential] = useState({
-    email: "",
-    password: "",
-    repeatPassword: "",
-  });
+const Register = () => {  
 
-  const [error, setError] = useState({
-    email: false,
-    password: false,
-    repeatPassword: false,
-  });
+  const {
+      value: emailValue,
+      changeHeandler: emailChangeHeandler,
+      hasError: emailError,
+      inputBlurHeandler: emailInputBluerHeandler,
+    } = useInput("", (value) => isEmail(value) && isNotEmpty(value));
+
+  const {
+     value: passwordValue,
+     changeHeandler: passwordChangeHeandler,
+     hasError: passwordError,
+     inputBlurHeandler: passwordInputBluerHeandler,
+   } = useInput(
+     "",
+     (value) => hasMinLength(value, passwordMinLength) && isNotEmpty(value)
+   );
+
+   const {
+    value: repeatPasswordValue,
+    changeHeandler: repeatPasswordChangeHeandler,
+    hasError: repeatPasswordError,
+    inputBlurHeandler: repeatPasswordInputBluerHeandler,
+  } = useInput(
+    "",
+    (value) => hasMinLength(value, passwordMinLength) && isNotEmpty(value)
+  );
 
   const [requestAndOtherError, setRequestAndOtherError] = useState({
     message: "",
@@ -27,20 +45,15 @@ const Register = () => {
 
   const registerSubmitHeandler = (e) => {
     e.preventDefault();
-
-    if (StateValidator.validateState(error, registerCredential)) {
-      setRequestAndOtherError((error) => ({
-        message: "Required valid email and password!",
-        hasError: true,
-      }));
-
+    
+    if (emailError || passwordError || repeatPasswordError) {
       return;
     }
 
-    let isNotValidConfirmation = AuthValidator.passwordConfirmation(
-      registerCredential.password,
-      registerCredential.repeatPassword
-    );
+    let isNotValidConfirmation = isEqualToOtherValue(
+      passwordValue,
+      repeatPasswordValue
+    );   
 
     if (isNotValidConfirmation) {
       setRequestAndOtherError((error) => ({
@@ -52,8 +65,8 @@ const Register = () => {
     }
 
     let registerObject = {
-      email: registerCredential.email,
-      password: registerCredential.password,
+      email: emailValue,
+      password: passwordValue,
     };
 
     AuthService.register(registerObject).then((response) => {
@@ -68,28 +81,7 @@ const Register = () => {
       navigate("/login");
     });
   };
-
-  const registerChangeHeandler = (e) => {
-    setRegisterCredential((state) => ({
-      ...state,
-      [e.target.name]: e.target.value,
-    }));
-  };
-
-  const registerError = (e) => {
-    let currField = e.target.name;
-
-    let isFieldNotValid = AuthValidator.credentialErrors(
-      currField,
-      e.target.value
-    );
-
-    setError((error) => ({
-      ...error,
-      [currField]: isFieldNotValid,
-    }));
-  };
-
+  
   return (
     <section id="register">
       <div className="form">
@@ -100,48 +92,36 @@ const Register = () => {
           </span>
         )}
         <form className="register-form" onSubmit={registerSubmitHeandler}>
-          <input
+          <Input
+            label={"Email"}
             type="text"
             name="email"
-            id="register-email"
-            placeholder="email"
-            value={registerCredential.email}
-            onChange={registerChangeHeandler}
-            onBlur={registerError}
-          />
-          {error.email && (
-            <span className="field-error-message">
-              Email address is not valid!
-            </span>
-          )}
-          <input
+            id="register-email"            
+            value={emailValue}
+            onChange={emailChangeHeandler}
+            onBlur={emailInputBluerHeandler}
+            error={emailError && "Email address is not valid!"}
+          />          
+          <Input
+            label={"Password"}
             type="password"
             name="password"
-            id="register-password"
-            placeholder="password"
-            value={registerCredential.password}
-            onChange={registerChangeHeandler}
-            onBlur={registerError}
-          />
-          {error.password && (
-            <span className="field-error-message">
-              Password should be more than 6 cheracters!
-            </span>
-          )}
-          <input
+            id="register-password"            
+            value={passwordValue}
+            onChange={passwordChangeHeandler}
+            onBlur={passwordInputBluerHeandler}
+            error={passwordError && "Password should be more than 6 cheracters!"}
+          />          
+          <Input
+            label={"Password confirmation"}
             type="password"
             name="repeatPassword"
-            id="repeat-password"
-            placeholder="repeat password"
-            value={registerCredential.repeatPassword}
-            onChange={registerChangeHeandler}
-            onBlur={registerError}
-          />
-          {error.repeatPassword && (
-            <span className="field-error-message">
-              Password should be more than 6 cheracters!
-            </span>
-          )}
+            id="repeat-password"            
+            value={repeatPasswordValue}
+            onChange={repeatPasswordChangeHeandler}
+            onBlur={repeatPasswordInputBluerHeandler}
+            error={repeatPasswordError && "Password should be more than 6 cheracters!"}
+          />          
           <button type="submit">register</button>
           <p className="message">
             Already registered? <Link to="/login">Login</Link>

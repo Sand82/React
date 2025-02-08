@@ -6,8 +6,7 @@ import { AuthContext } from "../contexts/AuthContext.jsx";
 import Input from "./UI/Input.jsx";
 import { useInput } from "../hooks/useInput.js";
 import { isEmail, isNotEmpty, hasMinLength } from "../validators/Validation.js";
-
-const passwordMinLength = 6;
+import * as passwordMinLength from "../constants/GlobalConstants.js"
 
 const Login = () => {
   const {

@@ -19,7 +19,8 @@
   scale: 0.8;
 }
 
-.field-error-message {
+.field-error-message,
+.server-error-massage {
   font-size: 16px;
   color: red;
   display: inline-block;
@@ -27,9 +28,17 @@
 }
 
 .form h2 {
-  margin-bottom: 50px;
+  padding: 10px;
+  margin-bottom: 30px;
   font-size: 30px;
   color: rgb(238, 7, 7);
+}
+
+.form-label {
+  display: flex;
+  justify-self: start;
+  padding: 5px 0;
+  font-size: 20px;
 }
 
 .form input {
