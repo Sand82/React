@@ -6,27 +6,28 @@ import { AuthContext } from "../contexts/AuthContext.jsx";
 import Input from "./UI/Input.jsx";
 import { useInput } from "../hooks/useInput.js";
 import { isEmail, isNotEmpty, hasMinLength } from "../validators/Validation.js";
-import * as Constant from "../constants/GlobalConstants.js"
+import * as Constant from "../constants/GlobalConstants.js";
 
 const Login = () => {
   const {
     value: emailValue,
     changeHeandler: emailChangeHeandler,
     hasError: emailError,
-    inputBlurHeandler: emailInputBluerHeandler,
-  } = useInput("", (value) => isEmail(value) && isNotEmpty(value));
+    inputBlurHeandler: emailInputBluerHeandler,    
+  } = useInput("", (value) => isEmail(value));
 
   const {
     value: passwordValue,
     changeHeandler: passwordChangeHeandler,
     hasError: passwordError,
-    inputBlurHeandler: passwordInputBluerHeandler,
+    inputBlurHeandler: passwordInputBluerHeandler,    
   } = useInput(
     "",
-    (value) => hasMinLength(value, Constant.passwordMinLength) && isNotEmpty(value)
+    (value) =>
+      hasMinLength(value, Constant.passwordMinLength) && isNotEmpty(value)
   );
 
-  const [requestError, setRequestError] = useState({
+  const [generalError, setGeneralErrors] = useState({
     message: "",
     hasError: false,
   });
@@ -41,15 +42,22 @@ const Login = () => {
       return;
     }
 
+    if (!isNotEmpty(emailValue) || !isNotEmpty(passwordValue)) {
+      setGeneralErrors((error) => ({
+        message: "All fields are required.",
+        hasError: true,
+      }));
+      return;
+    }
+
     let loginCredential = {
       email: emailValue,
       password: passwordValue,
     };
 
     AuthService.login(loginCredential).then((response) => {
-      console.log(response);
       if (response.code) {
-        setRequestError((error) => ({
+        setGeneralErrors((error) => ({
           message: response.message,
           hasError: true,
         }));
@@ -59,15 +67,17 @@ const Login = () => {
       userLogin(response);
       navigate("/");
     });
-  };
+  };  
 
   return (
     <section id="login">
       <div className="form">
         <h2>Login</h2>
         <form className="login-form" onSubmit={loginSubmitHeandler}>
-          {requestError.hasError && (
-            <span className="server-error-massage">{requestError.message}</span>
+          {generalError.hasError && (
+            <span className="general-error-massage">
+              {generalError.message}
+            </span>
           )}
           <Input
             label="Email"
@@ -77,7 +87,7 @@ const Login = () => {
             value={emailValue}
             onChange={emailChangeHeandler}
             onBlur={emailInputBluerHeandler}
-            error={emailError && "Email address is not valid!"}
+            error={emailError && "Email address is not valid."}
           />
           <Input
             label="Password"
@@ -89,7 +99,7 @@ const Login = () => {
             onBlur={passwordInputBluerHeandler}
             error={
               passwordError &&
-              `Password shoud be more than ${Constant.passwordMinLength} symbols!`
+              `Password shoud be more than ${Constant.passwordMinLength} symbols.`
             }
           />
           <button type="submit">login</button>

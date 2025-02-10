@@ -14,6 +14,8 @@ const Catalog = () => {
 
   let motorsInfo;
 
+  console.log(motors)
+
   if (motors.length > 0) {
     motorsInfo = (
       <>

@@ -2,19 +2,19 @@ import * as Constant from "../constants/GlobalConstants.js";
 
 export const isEmail = (value) => {
   let regex = new RegExp(/^[a-zA-Z0-9]+@+[a-zA-Z0-9]+.+[A-z]/);
-  return !regex.test(value);
+  return regex.test(value);
 };
 
 export const isNotEmpty = (value) => {
-  return value.trim() === "";
+  return value.trim() !== "";
 };
 
 export const hasMinLength = (value, minLength) => {
-  return value.length < minLength;
+  return value.length >= minLength;
 };
 
 export const isEqualToOtherValue = (value, otherValue) => {
-  return value !== otherValue;
+  return value === otherValue;
 };
 
 export const isValidUrl = (value) => {
@@ -22,15 +22,15 @@ export const isValidUrl = (value) => {
 };
 
 export const isValidNumberValue = (value, limit) => {
-  return +value <= limit;
+  return +value >= limit;
 };
 
 export const isValidYear = (value) => {
-  return !(value >= Constant.yearMinValue && value <= Constant.yearMaxValue);
+  return value >= Constant.yearMinValue && value <= Constant.yearMaxValue;
 };
 
 const validateImageUrl = (url) => {
-  return !(
+  return (
     url.endsWith(".png") ||
     url.endsWith(".jpeg") ||
     url.endsWith(".jpg") ||
