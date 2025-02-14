@@ -5,14 +5,14 @@ import * as MotorService from "../../../services/MotorService";
 import { AuthContext } from "../../../contexts/AuthContext";
 
 const MotorDelete = () => {
+  
   const { user } = useContext(AuthContext);
   const { id } = useParams();
   const navigate = useNavigate();
 
   useEffect(() => {
     MotorService.remove(id, user.accessToken).then((response) => {
-      if (response.ok) {
-        console.log(response);
+      if (response.ok) {        
         navigate("/catalog");
       }
     });

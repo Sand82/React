@@ -117,8 +117,7 @@ const MotorManage = () => {
     };
 
     if (id) {
-      editMotor({ ...motorData, id: id });
-      console.log(motorData);
+      editMotor({ ...motorData, id: id });      
     } else {
       createMotor(motorData);
     }

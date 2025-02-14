@@ -24,7 +24,7 @@ const Header = () => {
         {user.email && <div className="nav-user-email">{user.email}</div>}
         <div>
           <Link to="/catalog">Motorcycles</Link>
-          <Link to="#">Search</Link>
+          <Link to="/search">Search</Link>
         </div>
 
         {user.email ? (

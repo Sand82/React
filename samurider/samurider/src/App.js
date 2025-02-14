@@ -8,7 +8,8 @@ import Register from "./components/Register.jsx";
 import MotorDetails from "./components/catalog/details/MotorDetails.jsx";
 import { AuthProvider } from "./contexts/AuthContext.jsx";
 import MotorManage from "./components/catalog/manage/MotorManage.jsx";
-import MotorDelete from "./components/catalog/manage/MotorDelet.jsx";
+import MotorDelete from "./components/catalog/manage/MotorDelete.jsx";
+import MotorSearch from "./components/catalog/search/MotorSearch.jsx"
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/catalog" element={<Catalog />} />
             <Route path="/create" element={<MotorManage />} />
+            <Route path="/search" element={<MotorSearch />} />
             <Route path="/edit/:id" element={<MotorManage />} />
             <Route path="/delete/:id" element={<MotorDelete />} />
             <Route path="/catalog/details/:id" element={<MotorDetails />} />
