@@ -10,7 +10,7 @@ export const isNotEmpty = (value) => {
 };
 
 export const hasMinLength = (value, minLength) => {
-  return value.length >= minLength;
+  return value ? value.length : 0 >= minLength;
 };
 
 export const isEqualToOtherValue = (value, otherValue) => {
@@ -18,7 +18,7 @@ export const isEqualToOtherValue = (value, otherValue) => {
 };
 
 export const isValidUrl = (value) => {
-  return validateImageUrl(value);
+  return value && validateImageUrl(value);
 };
 
 export const isValidNumberValue = (value, limit) => {

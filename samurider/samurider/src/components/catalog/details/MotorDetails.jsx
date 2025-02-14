@@ -31,10 +31,10 @@ const MotorDetails = () => {
           </div>
           {/*Edit and Delete are only for creator*/}
           <div id="action-buttons">
-            <Link to="" id="edit-btn">
+            <Link to={`/edit/${motor._id}`} id="edit-btn">
               Edit
             </Link>
-            <Link to="" id="delete-btn">
+            <Link to={`/delete/${motor._id}`} id="delete-btn">
               Delete
             </Link>
           </div>

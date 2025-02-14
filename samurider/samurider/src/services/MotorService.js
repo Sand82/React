@@ -5,16 +5,31 @@ export const getAll = () => {
 };
 
 export const getOne = (motorId) => {
-    return fetch(`${url}/${motorId}`).then((res) => res.json());
-}
+  return fetch(`${url}/${motorId}`).then((res) => res.json());
+};
 
 export const create = (data, token) => {
-  return fetch(url, {
-    method: "POST",
+  let requestObject = createFetchObject("POST", token, data);
+  return fetch(url, requestObject);
+};
+
+export const edit = (data, token) => {
+  let requestObject = createFetchObject("PUT", token, data);
+  return fetch(`${url}/${data.id}`, requestObject);
+};
+
+export const remove = (id, token) => {
+  let requestObject = createFetchObject("DELETE", token);
+  return fetch(`${url}/${id}`, requestObject);
+};
+
+const createFetchObject = (method, token, data) => {
+  return {
+    method: method,
     headers: {
       "Content-Type": "application/json",
       "X-Authorization": `${token}`,
     },
-    body: JSON.stringify(data),
-  });
-}
+    body: data && JSON.stringify(data),
+  };
+};

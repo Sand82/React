@@ -1,8 +1,12 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export const useInput = (defaultValue, validationFn) => {
   const [value, setValue] = useState(defaultValue);
   const [didEdit, setDidEdit] = useState(false);
+
+  useEffect(() => {
+    setValue(defaultValue);
+  }, [defaultValue]);
 
   const changeHeandler = (e) => {
     setValue(e.target.value);
@@ -20,7 +24,7 @@ export const useInput = (defaultValue, validationFn) => {
   };
 
   return {
-    value,
+    value: value,
     changeHeandler,
     inputBlurHeandler,
     hasError: didEdit && !valioIsValid,

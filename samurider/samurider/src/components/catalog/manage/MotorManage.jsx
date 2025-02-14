@@ -1,5 +1,5 @@
-import { useContext, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useContext, useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 
 import {
   hasMinLength,
@@ -12,36 +12,57 @@ import { useInput } from "../../../hooks/useInput.js";
 import Input from "../../UI/Input.jsx";
 import * as Constant from "../../../constants/GlobalConstants.js";
 import { AuthContext } from "../../../contexts/AuthContext.jsx";
-import * as MotorService from "../../../services/MotorService.js"
+import * as MotorService from "../../../services/MotorService.js";
 
-const MotorCreate = () => {
+const MotorManage = () => {
+  const { id } = useParams();
+
+  const [motor, setMotor] = useState({
+    model: "",
+    imageUrl: "",
+    year: "",
+    mileage: "",
+    contact: "",
+    about: "",
+  });
+
+  useEffect(() => {
+    if (id) {
+      MotorService.getOne(id).then((response) => {
+        setMotor(response);
+      });
+    }
+  }, [id]);
+
   const {
     value: modelValue,
     changeHeandler: modelChangeHeandler,
     hasError: modelError,
     inputBlurHeandler: modelInputBluerHeandler,
-  } = useInput("", (value) => hasMinLength(value, Constant.modelMinLength));
+  } = useInput(motor ? motor.model : "", (value) =>
+    hasMinLength(value, Constant.modelMinLength)
+  );
 
   const {
     value: imageUrlValue,
     changeHeandler: imageUrlChangeHeandler,
     hasError: imageUrlError,
     inputBlurHeandler: imageUrlInputBluerHeandler,
-  } = useInput("", (value) => isValidUrl(value));
+  } = useInput(motor ? motor.imageUrl : "", (value) => isValidUrl(value));
 
   const {
     value: yearValue,
     changeHeandler: yearChangeHeandler,
     hasError: yearError,
     inputBlurHeandler: yearInputBluerHeandler,
-  } = useInput("", (value) => isValidYear(value));
+  } = useInput(motor ? motor.year : "", (value) => isValidYear(value));
 
   const {
     value: mileageValue,
     changeHeandler: mileageChangeHeandler,
     hasError: mileageError,
     inputBlurHeandler: mileageInputBluerHeandler,
-  } = useInput("", (value) =>
+  } = useInput(motor ? motor.mileage : "", (value) =>
     isValidNumberValue(value, Constant.mileageMinValue)
   );
 
@@ -50,14 +71,18 @@ const MotorCreate = () => {
     changeHeandler: contactChangeHeandler,
     hasError: contactError,
     inputBlurHeandler: contactInputBluerHeandler,
-  } = useInput("", (value) => hasMinLength(value, Constant.contactMinLength));
+  } = useInput(motor ? motor.contact : "", (value) =>
+    hasMinLength(value, Constant.contactMinLength)
+  );
 
   const {
     value: aboutValue,
     changeHeandler: aboutChangeHeandler,
     hasError: aboutError,
     inputBlurHeandler: aboutInputBluerHeandler,
-  } = useInput("", (value) => hasMinLength(value, Constant.aboutMinLength));
+  } = useInput(motor ? motor.about : "", (value) =>
+    hasMinLength(value, Constant.aboutMinLength)
+  );
 
   const [generalErrors, setGeneralErrors] = useState({
     message: "",
@@ -82,27 +107,47 @@ const MotorCreate = () => {
       return;
     }
 
-   let motorData = {
+    let motorData = {
       model: modelValue,
-      imageUrl: imageUrlValue, 
-      year: yearValue, 
+      imageUrl: imageUrlValue,
+      year: yearValue,
       mileage: mileageValue,
       contact: contactValue,
-      about: aboutValue
+      about: aboutValue,
+    };
+
+    if (id) {
+      editMotor({ ...motorData, id: id });
+      console.log(motorData);
+    } else {
+      createMotor(motorData);
     }
-    
-    MotorService.create(motorData, user.accessToken)
-      .then(responce => {
-        if (!responce.ok) {
-          setGeneralErrors((error) => ({
-            message: "Something went wrong. Try again later.",
-            hasError: true,
-          }));
-          return;
-        }
-      })
-    
-    navigate("/catalog")
+
+    navigate("/catalog");
+  };
+
+  const createMotor = (motorData) => {
+    MotorService.create(motorData, user.accessToken).then((responce) => {
+      if (!responce.ok) {
+        setGeneralErrors((error) => ({
+          message: "Something went wrong. Try again later.",
+          hasError: true,
+        }));
+        return;
+      }
+    });
+  };
+
+  const editMotor = (motorData) => {
+    MotorService.edit(motorData, user.accessToken).then((responce) => {
+      if (!responce.ok) {
+        setGeneralErrors((error) => ({
+          message: "Something went wrong. Try again later.",
+          hasError: true,
+        }));
+        return;
+      }
+    });
   };
 
   const hasModelError = () => {
@@ -127,11 +172,13 @@ const MotorCreate = () => {
     );
   };
 
+  const operationName = id ? "Edit" : "Add";
+
   return (
     <section id="create">
-      <h2>Add Motorcycle</h2>
+      <h2>{operationName} Motorcycle</h2>
       <div className="form">
-        <h2>Add Motorcycle</h2>
+        <h2>{operationName} Motorcycle</h2>
         {generalErrors.hasError && (
           <span className="general-error-massage">{generalErrors.message}</span>
         )}
@@ -216,11 +263,11 @@ const MotorCreate = () => {
             }
           />
 
-          <button type="submit">Add Motorcycle</button>
+          <button type="submit">{operationName} Motorcycle</button>
         </form>
       </div>
     </section>
   );
 };
 
-export default MotorCreate;
+export default MotorManage;
