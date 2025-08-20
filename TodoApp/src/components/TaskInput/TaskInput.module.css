@@ -1,0 +1,33 @@
+.container {
+  padding: 5px;
+}
+
+.input-container {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.task-label {
+  color: #333;
+  line-height: 1.5;
+  font-weight: bold;
+}
+
+.task-input {
+  padding: 5px;
+  border-radius: 10px;
+  border: 1px solid #777;
+}
+
+.task-button {
+  margin-top: 20px;
+  padding: 6px 15px;
+  border-radius: 10px;
+  border: 1px solid #777;
+  background-color: white;
+}
+
+.task-button:hover {
+  background-color: antiquewhite;
+}

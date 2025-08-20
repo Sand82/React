@@ -1,0 +1,18 @@
+.container {
+  padding: 20px;
+}
+
+.task-title {
+  color: #333;
+  text-transform: uppercase;
+  text-align: center;
+  line-height: 1.5;
+}
+
+.task-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+  overflow: hidden;
+}

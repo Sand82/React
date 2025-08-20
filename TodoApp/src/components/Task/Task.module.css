@@ -1,0 +1,39 @@
+.task {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid #777;
+  border-radius: 10px;
+  margin: 5px;
+  padding: 5px;
+  background-color: white;
+  text-transform: uppercase;
+}
+
+.complete-task {
+  text-decoration: line-through;
+  cursor: pointer;
+}
+
+.task-edit-input {
+  width: 85%;
+  padding: 0;
+  margin: 0;
+  text-transform: uppercase;
+  margin-left: 5px;
+}
+
+.task-name {
+  padding: 10px;
+}
+
+.task-button {
+  border: 1px solid #777;
+  border-radius: 50%;
+}
+
+.remove-task-button {
+  margin-left: 3px;
+  background-color: rgb(255, 0, 0);
+  color: white;
+}
